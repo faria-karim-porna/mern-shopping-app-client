@@ -1,2 +1,168 @@
 @import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 /* @import "../../../node_modules/bootstrap/dist/js/bootstrap.bundle"; */
+body {
+    font-family: "Inconsolata", monospace;
+    background: linear-gradient(90deg, rgb(246, 246, 246) 0%, rgb(246, 246, 246) 43%, rgba(0, 212, 255, 1) 100%) !important;
+    color: white;
+}
+
+.page {
+    min-height: 100vh;
+}
+
+/* =============================== Login ===================================== */
+
+
+
+.login-view {
+    width: 50%;
+}
+
+.login-form-section {
+    z-index: 0;
+}
+
+
+
+.login-section {
+    background-color: rgb(24, 24, 24);
+    border-radius: 15px;
+    width: 90vw;
+    min-height: 90vh;
+}
+
+.login-form-card {
+    background-color: black;
+    border-radius: 15px;
+    z-index: -5;
+}
+
+.login-form-border {
+    background: linear-gradient(45deg,
+            #fb0094,
+            #00f,
+            #0f0,
+            #ff0,
+            #f00,
+            #fb0094,
+            #00f,
+            #0f0,
+            #ff0,
+            #f00);
+    background-size: 400%;
+    border-radius: 15px;
+    height: 100%;
+    animation: colorAnimate 20s linear infinite;
+    z-index: -4;
+}
+
+.login-form-main {
+    background-color: black;
+    border-radius: 20px;
+    height: 100%;
+    font-size: 20px;
+    z-index: -3;
+}
+
+.input-field {
+    margin-top: 20px;
+    background: linear-gradient(45deg,
+            #fb0094,
+            #00f,
+            #0f0,
+            #ff0,
+            #f00,
+            #fb0094,
+            #00f,
+            #0f0,
+            #ff0,
+            #f00);
+    background-size: 400%;
+    border-radius: 15px;
+    padding: 2px;
+    animation: colorAnimate 20s linear infinite;
+}
+
+input[type="email"],
+input[type="password"] {
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 15px;
+    background-color: black;
+    font-size: 20px;
+}
+
+input[type="submit"] {
+    background: linear-gradient(45deg,
+            #fb0094,
+            #00f,
+            #0f0,
+            #ff0,
+            #f00,
+            #fb0094,
+            #00f,
+            #0f0,
+            #ff0,
+            #f00);
+    background-size: 400%;
+    border-radius: 15px;
+    padding: 2px;
+    animation: colorAnimate 20s linear infinite;
+    color: black;
+    border: none;
+    cursor: pointer;
+    border: 3px solid rgb(24, 24, 24);
+    font-size: 28px;
+    font-weight: 900;
+}
+
+::placeholder {
+    color: white;
+    font-size: 20px;
+}
+
+input:focus {
+    outline: none !important;
+}
+
+.main-form-body {
+    height: 100vh;
+}
+
+.form-name {
+    font-size: 30px;
+    font-weight: 900;
+}
+
+.login-link-text {
+    color: red;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+@keyframes colorAnimate {
+    0% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 300% 0;
+    }
+
+    100% {
+        background-position: 0 0;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .login-view {
+        width: 75%;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .login-view {
+        width: 100%;
+    }
+}
