@@ -4,7 +4,7 @@
 body {
     font-family: "Inconsolata", monospace;
     background: linear-gradient(90deg, rgb(246, 246, 246) 0%, rgb(246, 246, 246) 43%, rgba(0, 212, 255, 1) 100%) !important;
-    color: white;
+    color: #4d4d4d;
 }
 
 .page {
@@ -27,12 +27,14 @@ body {
 
 input[type="email"],
 input[type="password"] {
-    color: white;
     padding: 12px;
     border: none;
     border-radius: 15px;
-    background-color: black;
     font-size: 20px;
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
 }
 
 input[type="submit"] {
