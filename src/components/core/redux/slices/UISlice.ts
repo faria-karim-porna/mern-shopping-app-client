@@ -1,19 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { MovieType } from "../../types/moviesType";
+import { EnumModal } from "../../enums/EnumModal";
 
 interface UIState {
-  showModal?: boolean;
+  showModal?: EnumModal;
 }
 
 const initialState: UIState = {
-  showModal: false,
+  showModal: EnumModal.None,
 };
 
 const UISlice = createSlice({
   initialState,
   name: "sliceUI",
   reducers: {
-    setModalView(state, action: PayloadAction<boolean>) {
+    setModalView(state, action: PayloadAction<EnumModal>) {
       state.showModal = action.payload;
     },
   },

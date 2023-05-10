@@ -1,8 +1,15 @@
 import React from "react";
+import { useAppDispatch } from "../core/redux/reduxStore";
+import { UIAction } from "../core/redux/slices/UISlice";
+import { EnumModal } from "../core/enums/EnumModal";
 
 const MainComponent = () => {
+  const dispatch = useAppDispatch();
   return (
     <div className="main w-100">
+      <button onClick={() => dispatch(UIAction.setModalView(EnumModal.UserModal))} className="log-in-button w-100">
+        Add User
+      </button>
       <div className="table-box table-responsive">
         <table className="table">
           <thead>
