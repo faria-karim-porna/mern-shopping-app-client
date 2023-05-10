@@ -13,9 +13,9 @@ const LoginComponent = () => {
             {/* <!-- login area start --> */}
             <div className="w-100 pt-2 pb-2 pr-2 pl-2">
               <div className="login-form-card p-1">
-                <div className="login-form-border">
-                  <div className="login-form-main d-flex justify-content-center align-items-center text-center pt-4 pb-4">
-                    <div className="w-75 login-form-section">
+                <div className="">
+                  <div className="d-flex justify-content-center align-items-center text-center pt-4 pb-4">
+                    <div className="w-75">
                       {/* <!-- form start --> */}
                       <div className="d-flex justify-content-center align-items-center">
                         <div className="w-100">
@@ -29,7 +29,7 @@ const LoginComponent = () => {
                                 <input type="password" placeholder="Password" className="w-100" name="Password" />
                               </div>
                               <div className="mb-4 mt-5">
-                                <button onClick={() => login()}></button>
+                                <button onClick={() => login()}>Log In</button>
                                 <input type="submit" value="Log In" className="w-100" />
                               </div>
                             </div>
