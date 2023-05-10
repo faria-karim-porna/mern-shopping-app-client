@@ -1,6 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Login } from "./components/pages/Login";
+import { ForgotPassword } from "./components/pages/ForgetPassword";
+import { SignUp } from "./components/pages/Signup";
 
 export default function App() {
   return (
@@ -8,7 +10,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/user" element={<Users />} />
+        <Route path="/login/forgot" element={<ForgotPassword />} />
+        <Route path="/signup" element={<SignUp />} />
       </Routes>
     </Router>
   );
@@ -16,12 +19,4 @@ export default function App() {
 
 function Home() {
   return <h2 className="text-danger">Home</h2>;
-}
-
-function About() {
-  return <h2>About</h2>;
-}
-
-function Users() {
-  return <h2>Users</h2>;
 }
