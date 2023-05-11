@@ -32,34 +32,45 @@ const SignUpComponent = () => {
   };
 
   const checkNameValidation = (value: string, isFocused: boolean) => {
-    const emailValidationRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const noNumberAndSpecialCharRegex = /^[a-zA-Z\s]+$/;
     if (isFocused) {
-      setValidationErros({ ...validationErrors, email: "" });
+      setValidationErros({ ...validationErrors, name: "" });
     } else {
+      setValidationData({ ...validationData, name: value });
       if (!value) {
-        setValidationErros({ ...validationErrors, email: "Email is required" });
-      } else if (!emailValidationRegex.test(value)) {
-        setValidationErros({ ...validationErrors, email: "Invalid email address" });
+        setValidationErros({ ...validationErrors, name: "Name is required" });
+      } else if (!noNumberAndSpecialCharRegex.test(value)) {
+        setValidationErros({ ...validationErrors, name: "Name should not contain special characters or numbers" });
       }
     }
   };
 
   const checkPasswordValidation = (value: string, isFocused: boolean) => {
-    const emailValidationRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const minimumPassLength = 8;
+    const atLeastOneNumberRegex = /\d/;
+    const atLeastOneSpecialCharacterRegex = /[!@#$%^&*]/;
+    const atLeastOneCharacterRegex = /[a-zA-Z]/;
     if (isFocused) {
       setValidationErros({ ...validationErrors, password: "" });
     } else {
       setValidationData({ ...validationData, password: value });
       if (!value) {
-        setValidationErros({ ...validationErrors, password: "Email is required" });
-      } else if (!emailValidationRegex.test(value)) {
-        setValidationErros({ ...validationErrors, password: "Invalid email address" });
+        setValidationErros({ ...validationErrors, password: "Password is required" });
+      } else if (
+        value.length < minimumPassLength ||
+        !atLeastOneNumberRegex.test(value) ||
+        !atLeastOneCharacterRegex.test(value) ||
+        !atLeastOneSpecialCharacterRegex.test(value)
+      ) {
+        setValidationErros({
+          ...validationErrors,
+          password: "Password should be of 8 or more characters with a mix of letters, numbers & symbols",
+        });
       }
     }
   };
 
   const checkConfirmPasswordValidation = (value: string, isFocused: boolean) => {
-    const emailValidationRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (isFocused) {
       setValidationErros({ ...validationErrors, confirmPassword: "" });
     } else {
@@ -73,6 +84,7 @@ const SignUpComponent = () => {
 
   const signUp = (): void => {
     const id = 1;
+
     const newUser = {
       id: id,
       name: (document.getElementsByName("Name")[0] as HTMLInputElement).value,
@@ -107,7 +119,19 @@ const SignUpComponent = () => {
                   <div className="form-name text-center">Sign Up</div>
                   <div className="d-flex justify-content-center">
                     <div className="w-100">
-                      <input type="text" placeholder="Name" className="w-100 input-field my-2" name="Name" />
+                      <input
+                        type="text"
+                        placeholder="Name"
+                        className="w-100 input-field my-2"
+                        name="Name"
+                        onBlur={(e: any) => {
+                          checkNameValidation(e.target.value, false);
+                        }}
+                        onFocus={(e: any) => {
+                          checkNameValidation(e.target.value, true);
+                        }}
+                      />
+                      {validationErrors.name ? <p className="text-danger">{validationErrors.name}</p> : null}
                       <input
                         type="email"
                         placeholder="Email"
@@ -121,7 +145,19 @@ const SignUpComponent = () => {
                         }}
                       />
                       {validationErrors.email ? <p className="text-danger">{validationErrors.email}</p> : null}
-                      <input type="password" placeholder="Password" className="w-100 input-field my-2" name="Password" />
+                      <input
+                        type="password"
+                        placeholder="Password"
+                        className="w-100 input-field my-2"
+                        name="Password"
+                        onBlur={(e: any) => {
+                          checkPasswordValidation(e.target.value, false);
+                        }}
+                        onFocus={(e: any) => {
+                          checkPasswordValidation(e.target.value, true);
+                        }}
+                      />
+                      {validationErrors.password ? <p className="text-danger">{validationErrors.password}</p> : null}
                       <input
                         type="password"
                         placeholder="Confirm Password"
