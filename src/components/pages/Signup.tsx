@@ -6,7 +6,7 @@ const SignUpComponent = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    termsAndCondition: false,
+    termsAndCondition: "",
   });
 
   const [validationData, setValidationData] = useState({
@@ -82,26 +82,55 @@ const SignUpComponent = () => {
     }
   };
 
+  const checkEmptyFieldErrorOnSignUp = () => {
+    setValidationErros({
+      name: validationData.name ? validationErrors.name : "Name is required",
+      email: validationData.email ? validationErrors.email : "Email is required",
+      password: validationData.password ? validationErrors.password : "Password is required",
+      confirmPassword: validationData.confirmPassword ? validationErrors.confirmPassword : "Confirm password is required",
+      termsAndCondition: validationData.termsAndCondition ? validationErrors.termsAndCondition : "Terms & condition should be checked",
+    });
+  };
+
+  const isValidate = (): boolean => {
+    if (
+      validationErrors.name ||
+      validationErrors.email ||
+      validationErrors.password ||
+      validationErrors.confirmPassword ||
+      !validationErrors.termsAndCondition ||
+      !validationData.name ||
+      !validationData.email ||
+      !validationData.password ||
+      !validationData.confirmPassword
+    ) {
+      return false;
+    }
+    return true;
+  };
+
   const signUp = (): void => {
-    const id = 1;
+    checkEmptyFieldErrorOnSignUp();
+    if (isValidate()) {
+      const id = 1;
+      const newUser = {
+        id: id,
+        name: validationData.name,
+        email: validationData.email,
+        password: validationData.password,
+        createdAt: new Date(),
+        createdBy: "Faria",
+        accessType: "SuperAdmin",
+      };
 
-    const newUser = {
-      id: id,
-      name: (document.getElementsByName("Name")[0] as HTMLInputElement).value,
-      email: (document.getElementsByName("Email")[0] as HTMLInputElement).value,
-      password: (document.getElementsByName("Password")[0] as HTMLInputElement).value,
-      createdAt: new Date(),
-      createdBy: "Faria",
-      accessType: "SuperAdmin",
-    };
-
-    // fetch("http://localhost:5000/api/createAccount", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(newUser),
-    // }).then((res) => console.log(res));
+      // fetch("http://localhost:5000/api/createAccount", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(newUser),
+      // }).then((res) => console.log(res));
+    }
   };
   return (
     <div className="page d-flex justify-content-center align-items-center">
@@ -178,10 +207,15 @@ const SignUpComponent = () => {
                             Agree To Our
                             <span className="link-text">Terms And Conditions</span>
                           </p>
-                          <input type="checkbox" name="Terms" />
+                          <input
+                            type="checkbox"
+                            name="Terms"
+                            onChange={() => setValidationData({ ...validationData, termsAndCondition: !validationData.termsAndCondition })}
+                          />
                           <span className="checkmark"></span>
                         </label>
                       </div>
+                      {validationErrors.termsAndCondition ? <p className="text-danger">{validationErrors.termsAndCondition}</p> : null}
                       <div className="mb-4 mt-5">
                         <button onClick={() => signUp()} className="log-in-button w-100">
                           Sign Up
