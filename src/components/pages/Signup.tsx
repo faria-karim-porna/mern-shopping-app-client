@@ -9,7 +9,29 @@ const SignUpComponent = () => {
     termsAndCondition: false,
   });
 
+  const [validationData, setValidationData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    termsAndCondition: false,
+  });
+
   const checkEmailValidation = (value: string, isFocused: boolean) => {
+    const emailValidationRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (isFocused) {
+      setValidationErros({ ...validationErrors, email: "" });
+    } else {
+      setValidationData({ ...validationData, email: value });
+      if (!value) {
+        setValidationErros({ ...validationErrors, email: "Email is required" });
+      } else if (!emailValidationRegex.test(value)) {
+        setValidationErros({ ...validationErrors, email: "Invalid email address" });
+      }
+    }
+  };
+
+  const checkNameValidation = (value: string, isFocused: boolean) => {
     const emailValidationRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (isFocused) {
       setValidationErros({ ...validationErrors, email: "" });
@@ -18,6 +40,33 @@ const SignUpComponent = () => {
         setValidationErros({ ...validationErrors, email: "Email is required" });
       } else if (!emailValidationRegex.test(value)) {
         setValidationErros({ ...validationErrors, email: "Invalid email address" });
+      }
+    }
+  };
+
+  const checkPasswordValidation = (value: string, isFocused: boolean) => {
+    const emailValidationRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (isFocused) {
+      setValidationErros({ ...validationErrors, password: "" });
+    } else {
+      setValidationData({ ...validationData, password: value });
+      if (!value) {
+        setValidationErros({ ...validationErrors, password: "Email is required" });
+      } else if (!emailValidationRegex.test(value)) {
+        setValidationErros({ ...validationErrors, password: "Invalid email address" });
+      }
+    }
+  };
+
+  const checkConfirmPasswordValidation = (value: string, isFocused: boolean) => {
+    const emailValidationRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (isFocused) {
+      setValidationErros({ ...validationErrors, confirmPassword: "" });
+    } else {
+      if (!value) {
+        setValidationErros({ ...validationErrors, confirmPassword: "Confirm password is required" });
+      } else if (value !== validationData.password) {
+        setValidationErros({ ...validationErrors, confirmPassword: "Passwords didn't match" });
       }
     }
   };
@@ -73,7 +122,20 @@ const SignUpComponent = () => {
                       />
                       {validationErrors.email ? <p className="text-danger">{validationErrors.email}</p> : null}
                       <input type="password" placeholder="Password" className="w-100 input-field my-2" name="Password" />
-                      <input type="password" placeholder="Confirm Password" className="w-100 input-field my-2" name="ConfirmPassword" />
+                      <input
+                        type="password"
+                        placeholder="Confirm Password"
+                        className="w-100 input-field my-2"
+                        name="ConfirmPassword"
+                        onBlur={(e: any) => {
+                          checkConfirmPasswordValidation(e.target.value, false);
+                        }}
+                        onFocus={(e: any) => {
+                          checkConfirmPasswordValidation(e.target.value, true);
+                        }}
+                      />
+                      {validationErrors.confirmPassword ? <p className="text-danger">{validationErrors.confirmPassword}</p> : null}
+
                       <div className="checkbox-field">
                         <label className="checkbox-container">
                           <p className="checkbox-text">
