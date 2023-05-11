@@ -1,7 +1,28 @@
 import React from "react";
 
 const SignUpComponent = () => {
-  const signUp = () => {};
+  const signUp = (): void => {
+    const id = 1;
+    const newUser = {
+      id: id,
+      name: (document.getElementsByName("Name")[0] as HTMLInputElement).value,
+      email: (document.getElementsByName("Email")[0] as HTMLInputElement).value,
+      password: (document.getElementsByName("Password")[0] as HTMLInputElement).value,
+      createdAt: new Date(),
+      createdBy: "Faria",
+      accessType: "SuperAdmin",
+    };
+
+    console.log("New User", newUser);
+
+    // fetch("http://localhost:5000/api/createAccount", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(newUser),
+    // }).then((res) => console.log(res));
+  };
   return (
     <div className="page d-flex justify-content-center align-items-center">
       {/* <!-- sign up section start --> */}
@@ -18,7 +39,7 @@ const SignUpComponent = () => {
                   <div className="form-name">Sign Up</div>
                   <div className="d-flex justify-content-center">
                     <div className="w-100">
-                      <input type="text" placeholder="Username" className="w-100 input-field my-2" name="Username" />
+                      <input type="text" placeholder="Name" className="w-100 input-field my-2" name="Name" />
                       <input type="email" placeholder="Email" className="w-100 input-field my-2" name="Email" />
                       <input type="password" placeholder="Password" className="w-100 input-field my-2" name="Password" />
                       <input type="password" placeholder="Confirm Password" className="w-100 input-field my-2" name="ConfirmPassword" />
