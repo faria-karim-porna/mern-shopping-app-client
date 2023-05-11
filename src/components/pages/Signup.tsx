@@ -16,8 +16,7 @@ const SignUpComponent = () => {
     } else {
       if (!value) {
         setValidationErros({ ...validationErrors, email: "Email is required" });
-      } else if (emailValidationRegex.test(value)) {
-        console.log("value", value);
+      } else if (!emailValidationRegex.test(value)) {
         setValidationErros({ ...validationErrors, email: "Invalid email address" });
       }
     }
@@ -34,8 +33,6 @@ const SignUpComponent = () => {
       createdBy: "Faria",
       accessType: "SuperAdmin",
     };
-
-    console.log("New User", newUser);
 
     // fetch("http://localhost:5000/api/createAccount", {
     //   method: "POST",
