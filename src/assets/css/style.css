@@ -22,6 +22,14 @@ body {
     font-size: 40px;
 }
 
+
+.underline {
+    height: 5px;
+    width: 100px;
+    background-color: #4d4d4d;
+    border-radius: 10px;
+}
+
 /* =============================== Glassmorphism ===================================== */
 .background-container {
     display: flex;
@@ -145,6 +153,21 @@ body {
     border-bottom: 1px solid rgba(255, 255, 255, 0.2); */
 }
 
+.glass-effect {
+    /* width: 1400px;
+    min-height: 400px; */
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    backdrop-filter: blur(5px);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
 /* =============================== Checkbox ===================================== */
 /* The checkbox-container */
 .checkbox-field {
@@ -224,7 +247,7 @@ body {
 /* =============================== Form ===================================== */
 
 .form-view {
-    width: 600px;
+    width: 500px;
 }
 
 .form-card {
@@ -275,7 +298,7 @@ input:focus {
 }
 
 .link-text {
-    color: rgba(45, 57, 226);
+    color: rgba(0, 212, 255, 1);
     text-decoration: underline;
     cursor: pointer;
 }
