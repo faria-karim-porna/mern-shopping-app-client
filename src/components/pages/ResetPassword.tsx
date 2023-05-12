@@ -76,7 +76,7 @@ const ResetPasswordComponent = () => {
             <div className="sub-section-name pl-4 text-center">Shopping App</div>
             {/* <!-- reset password area start --> */}
             <div className="w-100 pt-2 pb-2 pr-2 pl-2">
-              <div className="form-card p-1">
+              <div className="glass-effect p-1">
                 <div className="d-flex justify-content-center align-items-center pt-4 pb-4">
                   <div className="w-75">
                     {/* <!-- form start --> */}
