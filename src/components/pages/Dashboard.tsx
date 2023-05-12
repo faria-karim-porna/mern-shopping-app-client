@@ -9,10 +9,10 @@ const DashboardComponent = () => {
     <>
       <Navbar />
       <GlassmorphismBackground>
-        {/* <div className="d-flex">
+        <div className="glass-effect d-flex dashboard-container">
           <Sidebar />
           <Main />
-        </div> */}
+        </div>
       </GlassmorphismBackground>
     </>
   );
