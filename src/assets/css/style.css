@@ -68,7 +68,7 @@ body {
 }
 
 .content-container {
-    position: relative;
+    position: fixed;
 }
 
 .content-container .square {
@@ -171,7 +171,7 @@ body {
 /* =============================== Checkbox ===================================== */
 /* The checkbox-container */
 .checkbox-field {
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .checkbox-container {
@@ -206,17 +206,18 @@ body {
     height: 25px;
     width: 25px;
     border-radius: 5px;
-    background-color: #eee;
+    /* background-color: rgba(255, 255, 255, 0.1); */
+    background-color: #ccc;
 }
 
 /* On mouse-over, add a grey background color */
 .checkbox-container:hover input~.checkmark {
-    background-color: #ccc;
+    background-color: #332e2e50;
 }
 
 /* When the checkbox is checked, add a blue background */
 .checkbox-container input:checked~.checkmark {
-    background-color: #ff745d;
+    background-color: #00d2ff;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -271,11 +272,13 @@ body {
 
 .form-button {
     background-color: rgba(0, 212, 255, 1);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    background-size: 400%;
-    border-radius: 15px;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     padding: 2px;
-    animation: colorAnimate 20s linear infinite;
     color: white;
     border: none;
     cursor: pointer;

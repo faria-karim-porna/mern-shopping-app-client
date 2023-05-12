@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useAuthentication } from "../hooks/useAuthentication";
 import { GlassmorphismBackground } from "../common/GlassmorphismBackground";
+import { Link } from "react-router-dom";
 
 const SignUpComponent = () => {
   const {
@@ -136,7 +137,9 @@ const SignUpComponent = () => {
                     {/* <!-- form end --> */}
                     <p>
                       <span>Already Have An Account? </span>
-                      <span className="link-text">Login Here</span>
+                      <Link to="/login">
+                        <span className="link-text">Login Here</span>
+                      </Link>
                     </p>
                   </div>
                 </div>
