@@ -160,7 +160,7 @@ const SignUpComponent = () => {
                           checkNameValidation(e.target.value, true);
                         }}
                       />
-                      {validationErrors.name ? <p className="text-danger">{validationErrors.name}</p> : null}
+                      {validationErrors.name ? <small className="text-danger">{validationErrors.name}</small> : null}
                       <input
                         type="email"
                         placeholder="Email"
@@ -173,7 +173,7 @@ const SignUpComponent = () => {
                           checkEmailValidation(e.target.value, true);
                         }}
                       />
-                      {validationErrors.email ? <p className="text-danger">{validationErrors.email}</p> : null}
+                      {validationErrors.email ? <small className="text-danger">{validationErrors.email}</small> : null}
                       <input
                         type="password"
                         placeholder="Password"
@@ -186,7 +186,7 @@ const SignUpComponent = () => {
                           checkPasswordValidation(e.target.value, true);
                         }}
                       />
-                      {validationErrors.password ? <p className="text-danger">{validationErrors.password}</p> : null}
+                      {validationErrors.password ? <small className="text-danger">{validationErrors.password}</small> : null}
                       <input
                         type="password"
                         placeholder="Confirm Password"
@@ -199,7 +199,7 @@ const SignUpComponent = () => {
                           checkConfirmPasswordValidation(e.target.value, true);
                         }}
                       />
-                      {validationErrors.confirmPassword ? <p className="text-danger">{validationErrors.confirmPassword}</p> : null}
+                      {validationErrors.confirmPassword ? <small className="text-danger">{validationErrors.confirmPassword}</small> : null}
 
                       <div className="checkbox-field">
                         <label className="checkbox-container">
@@ -215,9 +215,9 @@ const SignUpComponent = () => {
                           <span className="checkmark"></span>
                         </label>
                       </div>
-                      {validationErrors.termsAndCondition ? <p className="text-danger">{validationErrors.termsAndCondition}</p> : null}
+                      {validationErrors.termsAndCondition ? <small className="text-danger">{validationErrors.termsAndCondition}</small> : null}
                       <div className="mb-4 mt-5">
-                        <button onClick={() => signUp()} className="log-in-button w-100">
+                        <button onClick={() => signUp()} className="form-button w-100">
                           Sign Up
                         </button>
                       </div>

@@ -1,10 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Login } from "./components/pages/Login";
-import { ForgotPassword } from "./components/pages/ForgetPassword";
 import { SignUp } from "./components/pages/Signup";
 import { Dashboard } from "./components/pages/Dashboard";
 import { UserModal } from "./components/modals/UserModal";
+import { ResetPassword } from "./components/pages/ResetPassword";
 
 export default function App() {
   return (
@@ -13,7 +13,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/login/forgot" element={<ForgotPassword />} />
+          <Route path="/resetpassword" element={<ResetPassword />} />
           <Route path="/signup" element={<SignUp />} />
         </Routes>
       </Router>
