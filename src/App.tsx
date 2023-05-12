@@ -5,7 +5,6 @@ import { SignUp } from "./components/pages/Signup";
 import { Dashboard } from "./components/pages/Dashboard";
 import { UserModal } from "./components/modals/UserModal";
 import { ResetPassword } from "./components/pages/ResetPassword";
-import { GlassmorphismBackground } from "./components/common/GlassMorphismBackground";
 
 export default function App() {
   return (
@@ -16,7 +15,6 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/resetpassword" element={<ResetPassword />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/gmbg" element={<GlassmorphismBackground />} />
         </Routes>
       </Router>
       <UserModal />

@@ -1,7 +1,7 @@
 import React from "react";
 import { useAppDispatch } from "../core/redux/reduxStore";
 
-const GlassmorphismBackgroundComponent = () => {
+const GlassmorphismBackgroundComponent = (props: React.PropsWithChildren) => {
   const dispatch = useAppDispatch();
   return (
     <>
@@ -16,7 +16,7 @@ const GlassmorphismBackgroundComponent = () => {
           <div className="square"></div>
           <div className="square"></div>
           <div className="square"></div>
-          <div className="content"></div>
+          <div className="content">{props.children}</div>
         </div>
       </div>
     </>
