@@ -316,11 +316,8 @@ input:focus {
 
 .navbar {
     height: 50px;
-    border-bottom: 1px solid rgba(31, 38, 135, 0.37);
-    background: rgba(255, 255, 255, 0.25);
-    /* box-shadow: 0 2px 8px 0 rgba(31, 38, 135, 0.37); */
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
+    z-index: 2;
+    position: relative;
 }
 
 /* =============================== Sidebar ===================================== */

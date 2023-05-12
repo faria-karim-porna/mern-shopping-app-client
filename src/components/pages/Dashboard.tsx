@@ -2,15 +2,18 @@ import React from "react";
 import { Sidebar } from "../common/Sidebar";
 import { Navbar } from "../common/Navbar";
 import { Main } from "../common/Main";
+import { GlassmorphismBackground } from "../common/GlassmorphismBackground";
 
 const DashboardComponent = () => {
   return (
     <>
       <Navbar />
-      <div className="d-flex">
-        <Sidebar />
-        <Main />
-      </div>
+      <GlassmorphismBackground>
+        {/* <div className="d-flex">
+          <Sidebar />
+          <Main />
+        </div> */}
+      </GlassmorphismBackground>
     </>
   );
 };
