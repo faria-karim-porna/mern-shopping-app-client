@@ -86,7 +86,7 @@ export const useAuthentication = () => {
     setValidationData({ ...validationData, termsAndCondition: !validationData.termsAndCondition });
   };
 
-  const checkEmptyFieldErrorOnSignUp = () => {
+  const checkEmptyFieldError = () => {
     setValidationErros({
       name: validationData.name ? validationErrors.name : "Name is required",
       email: validationData.email ? validationErrors.email : "Email is required",
@@ -96,30 +96,14 @@ export const useAuthentication = () => {
     });
   };
 
-  const isValidate = (): boolean => {
-    if (
-      validationErrors.name ||
-      validationErrors.email ||
-      validationErrors.password ||
-      validationErrors.confirmPassword ||
-      !validationErrors.termsAndCondition ||
-      !validationData.name ||
-      !validationData.email ||
-      !validationData.password ||
-      !validationData.confirmPassword
-    ) {
-      return false;
-    }
-    return true;
-  };
+  
   return {
     checkEmailValidation,
     checkNameValidation,
     checkPasswordValidation,
     checkConfirmPasswordValidation,
     setTermsAndCondition,
-    checkEmptyFieldErrorOnSignUp,
-    isValidate,
+    checkEmptyFieldError,
     validationErrors,
     validationData,
   };

@@ -10,14 +10,30 @@ const SignUpComponent = () => {
     checkPasswordValidation,
     checkConfirmPasswordValidation,
     setTermsAndCondition,
-    checkEmptyFieldErrorOnSignUp,
-    isValidate,
+    checkEmptyFieldError,
     validationErrors,
     validationData,
   } = useAuthentication();
 
+  const isValidate = (): boolean => {
+    if (
+      validationErrors.name ||
+      validationErrors.email ||
+      validationErrors.password ||
+      validationErrors.confirmPassword ||
+      !validationErrors.termsAndCondition ||
+      !validationData.name ||
+      !validationData.email ||
+      !validationData.password ||
+      !validationData.confirmPassword
+    ) {
+      return false;
+    }
+    return true;
+  };
+
   const signUp = (): void => {
-    checkEmptyFieldErrorOnSignUp();
+    checkEmptyFieldError();
     if (isValidate()) {
       const id = 1;
       const newUser = {

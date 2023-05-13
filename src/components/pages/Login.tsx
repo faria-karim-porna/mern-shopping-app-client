@@ -1,57 +1,46 @@
 import React, { useState } from "react";
 import { GlassmorphismBackground } from "../common/GlassmorphismBackground";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuthentication } from "../hooks/useAuthentication";
 
 const LoginComponent = () => {
-  const [loginErrors, setLoginErros] = useState({
-    email: "",
-    password: "",
-  });
-
-  const [loginData, setLoginData] = useState({
-    email: "",
-    password: "",
-  });
-
-  const checkEmailValidation = (value: string, isFocused: boolean) => {
-    const emailValidationRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (isFocused) {
-      setLoginErros({ ...loginErrors, email: "" });
-    } else {
-      setLoginData({ ...loginData, email: value });
-      if (!value) {
-        setLoginErros({ ...loginErrors, email: "Email is required" });
-      } else if (!emailValidationRegex.test(value)) {
-        setLoginErros({ ...loginErrors, email: "Invalid email address" });
-      }
+  const navigate = useNavigate();
+  const { checkEmailValidation, checkPasswordValidation, checkEmptyFieldError, validationErrors, validationData } = useAuthentication();
+  const [errorMessage, setErrorMessage] = useState("");
+  const isValidate = (): boolean => {
+    if (validationErrors.email || validationErrors.password || !validationData.email || !validationData.password) {
+      return false;
     }
+    return true;
   };
+  const login = () => {
+    checkEmptyFieldError();
+    if (isValidate()) {
+      const loginUser = {
+        email: validationData.email,
+        password: validationData.password,
+      };
 
-  const checkPasswordValidation = (value: string, isFocused: boolean) => {
-    const minimumPassLength = 8;
-    const atLeastOneNumberRegex = /\d/;
-    const atLeastOneSpecialCharacterRegex = /[!@#$%^&*]/;
-    const atLeastOneCharacterRegex = /[a-zA-Z]/;
-    if (isFocused) {
-      setLoginErros({ ...loginErrors, password: "" });
-    } else {
-      setLoginData({ ...loginData, password: value });
-      if (!value) {
-        setLoginErros({ ...loginErrors, password: "Password is required" });
-      } else if (
-        value.length < minimumPassLength ||
-        !atLeastOneNumberRegex.test(value) ||
-        !atLeastOneCharacterRegex.test(value) ||
-        !atLeastOneSpecialCharacterRegex.test(value)
-      ) {
-        setLoginErros({
-          ...loginErrors,
-          password: "Password should be of 8 or more characters with a mix of letters, numbers & symbols",
+      fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(loginUser),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.data) {
+            console.log(data.data);
+            localStorage.setItem("token", data.data);
+            navigate("/");
+          } else {
+            console.log(data);
+            setErrorMessage(data.error);
+          }
         });
-      }
     }
   };
-  const login = () => {};
   return (
     <GlassmorphismBackground>
       <div className="d-flex justify-content-center align-items-center">
@@ -83,7 +72,7 @@ const LoginComponent = () => {
                             checkEmailValidation(e.target.value, true);
                           }}
                         />
-                        {loginErrors.email ? <small className="text-danger">{loginErrors.email}</small> : null}
+                        {validationErrors.email ? <small className="text-danger">{validationErrors.email}</small> : null}
                         <input
                           type="password"
                           placeholder="Password"
@@ -96,17 +85,19 @@ const LoginComponent = () => {
                             checkPasswordValidation(e.target.value, true);
                           }}
                         />
-                        {loginErrors.password ? <small className="text-danger">{loginErrors.password}</small> : null}
+                        {validationErrors.password ? <small className="text-danger">{validationErrors.password}</small> : null}
                         <div>
                           <Link to="/resetpassword">
                             <span className="link-text">Reset Password</span>
                           </Link>
                         </div>
+                        
 
                         <div className="mb-4 mt-3">
                           <button onClick={() => login()} className="form-button w-100">
                             Login
                           </button>
+                          {errorMessage ? <small className="text-danger mt-1">{errorMessage}</small> : null}
                         </div>
                       </div>
                     </div>
