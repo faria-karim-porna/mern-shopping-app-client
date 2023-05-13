@@ -30,7 +30,7 @@ const UsersViewComponent = () => {
       </div>
       <div className="glass-effect mt-4">
         {(allData?.length ?? 0) > 0 ? (
-          <div className="table-box table-responsive">
+          <div className="table-box table-responsive font-20">
             <table className="table">
               <thead>
                 <tr>
@@ -53,20 +53,26 @@ const UsersViewComponent = () => {
                     <td>{data.createdBy}</td>
                     <td>{data.accessType}</td>
                     <td>
-                      {store.personalData?.accessType === EnumAccessType.SuperAdmin ||
-                      (store.personalData?.accessType === EnumAccessType.Admin &&
-                        (data.accessType === EnumAccessType.Admin ||
-                          data.accessType === EnumAccessType.Moderator ||
-                          data.accessType === EnumAccessType.User)) ||
-                      (store.personalData?.accessType === EnumAccessType.Moderator && data.accessType === EnumAccessType.User) ? (
-                        <div>Edit</div>
-                      ) : null}{" "}
-                      {store.personalData?.accessType === EnumAccessType.SuperAdmin ||
-                      (store.personalData?.accessType === EnumAccessType.Admin &&
-                        (data.accessType === EnumAccessType.Moderator || data.accessType === EnumAccessType.User)) ||
-                      (store.personalData?.accessType === EnumAccessType.Moderator && data.accessType === EnumAccessType.User) ? (
-                        <div>Delete</div>
-                      ) : null}{" "}
+                      <div className="d-flex">
+                        {store.personalData?.accessType === EnumAccessType.SuperAdmin ||
+                        (store.personalData?.accessType === EnumAccessType.Admin &&
+                          (data.accessType === EnumAccessType.Admin ||
+                            data.accessType === EnumAccessType.Moderator ||
+                            data.accessType === EnumAccessType.User)) ||
+                        (store.personalData?.accessType === EnumAccessType.Moderator && data.accessType === EnumAccessType.User) ? (
+                          <div className="edit-icon d-flex justify-content-center align-items-center mx-2">
+                            <i className="fa fa-pencil"></i>
+                          </div>
+                        ) : null}{" "}
+                        {store.personalData?.accessType === EnumAccessType.SuperAdmin ||
+                        (store.personalData?.accessType === EnumAccessType.Admin &&
+                          (data.accessType === EnumAccessType.Moderator || data.accessType === EnumAccessType.User)) ||
+                        (store.personalData?.accessType === EnumAccessType.Moderator && data.accessType === EnumAccessType.User) ? (
+                          <div className="delete-icon d-flex justify-content-center align-items-center mx-2">
+                            <i className="fa fa-trash-o"></i>
+                          </div>
+                        ) : null}{" "}
+                      </div>
                     </td>
                   </tr>
                 ))}
