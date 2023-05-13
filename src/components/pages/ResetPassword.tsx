@@ -1,71 +1,60 @@
 import React, { useState } from "react";
 import { GlassmorphismBackground } from "../common/GlassmorphismBackground";
 import { Link } from "react-router-dom";
+import { useAuthentication } from "../hooks/useAuthentication";
 
 const ResetPasswordComponent = () => {
-  const [resetPasswordErrors, setResetPasswordErrors] = useState({
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const {
+    checkEmailValidation,
+    checkPasswordValidation,
+    checkConfirmPasswordValidation,
+    checkEmptyFieldError,
+    validationErrors,
+    validationData,
+  } = useAuthentication();
 
-  const [resetPasswordData, setResetPasswordData] = useState({
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-
-  const checkEmailValidation = (value: string, isFocused: boolean) => {
-    const emailValidationRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (isFocused) {
-      setResetPasswordErrors({ ...resetPasswordErrors, email: "" });
-    } else {
-      setResetPasswordData({ ...resetPasswordData, email: value });
-      if (!value) {
-        setResetPasswordErrors({ ...resetPasswordErrors, email: "Email is required" });
-      } else if (!emailValidationRegex.test(value)) {
-        setResetPasswordErrors({ ...resetPasswordErrors, email: "Invalid email address" });
-      }
+  const isValidate = (): boolean => {
+    if (
+      validationErrors.email ||
+      validationErrors.password ||
+      validationErrors.confirmPassword ||
+      !validationData.email ||
+      !validationData.password ||
+      !validationData.confirmPassword
+    ) {
+      return false;
     }
+    return true;
   };
+  const resetPassword = () => {
+    checkEmptyFieldError();
+    if (isValidate()) {
+      const resetPasswordUser = {
+        email: validationData.email,
+        password: validationData.password,
+      };
 
-  const checkPasswordValidation = (value: string, isFocused: boolean) => {
-    const minimumPassLength = 8;
-    const atLeastOneNumberRegex = /\d/;
-    const atLeastOneSpecialCharacterRegex = /[!@#$%^&*]/;
-    const atLeastOneCharacterRegex = /[a-zA-Z]/;
-    if (isFocused) {
-      setResetPasswordErrors({ ...resetPasswordErrors, password: "" });
-    } else {
-      setResetPasswordData({ ...resetPasswordData, password: value });
-      if (!value) {
-        setResetPasswordErrors({ ...resetPasswordErrors, password: "Password is required" });
-      } else if (
-        value.length < minimumPassLength ||
-        !atLeastOneNumberRegex.test(value) ||
-        !atLeastOneCharacterRegex.test(value) ||
-        !atLeastOneSpecialCharacterRegex.test(value)
-      ) {
-        setResetPasswordErrors({
-          ...resetPasswordErrors,
-          password: "Password should be of 8 or more characters with a mix of letters, numbers & symbols",
+      fetch("http://localhost:5000/api/resetpassword", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(resetPasswordUser),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.message) {
+            setErrorMessage("");
+            setSuccessMessage(data.message);
+          } else {
+            setSuccessMessage("");
+            setErrorMessage(data.error);
+          }
         });
-      }
     }
   };
-
-  const checkConfirmPasswordValidation = (value: string, isFocused: boolean) => {
-    if (isFocused) {
-      setResetPasswordErrors({ ...resetPasswordErrors, confirmPassword: "" });
-    } else {
-      if (!value) {
-        setResetPasswordErrors({ ...resetPasswordErrors, confirmPassword: "Confirm password is required" });
-      } else if (value !== resetPasswordData.password) {
-        setResetPasswordErrors({ ...resetPasswordErrors, confirmPassword: "Passwords didn't match" });
-      }
-    }
-  };
-  const resetPassword = () => {};
   return (
     <GlassmorphismBackground>
       <div className="d-flex justify-content-center align-items-center">
@@ -98,7 +87,7 @@ const ResetPasswordComponent = () => {
                             checkEmailValidation(e.target.value, true);
                           }}
                         />
-                        {resetPasswordErrors.email ? <small className="text-danger">{resetPasswordErrors.email}</small> : null}
+                        {validationErrors.email ? <small className="text-danger">{validationErrors.email}</small> : null}
                         <input
                           type="password"
                           placeholder="New Password"
@@ -111,7 +100,7 @@ const ResetPasswordComponent = () => {
                             checkPasswordValidation(e.target.value, true);
                           }}
                         />
-                        {resetPasswordErrors.password ? <small className="text-danger">{resetPasswordErrors.password}</small> : null}
+                        {validationErrors.password ? <small className="text-danger">{validationErrors.password}</small> : null}
                         <input
                           type="password"
                           placeholder="Confirm New Password"
@@ -124,8 +113,8 @@ const ResetPasswordComponent = () => {
                             checkConfirmPasswordValidation(e.target.value, true);
                           }}
                         />
-                        {resetPasswordErrors.confirmPassword ? (
-                          <small className="text-danger">{resetPasswordErrors.confirmPassword}</small>
+                        {validationErrors.confirmPassword ? (
+                          <small className="text-danger">{validationErrors.confirmPassword}</small>
                         ) : null}
                         <div>
                           <span>Go back to </span>
@@ -137,6 +126,8 @@ const ResetPasswordComponent = () => {
                           <button onClick={() => resetPassword()} className="form-button w-100">
                             Save
                           </button>
+                          {errorMessage ? <small className="text-danger mt-1">{errorMessage}</small> : null}
+                          {successMessage ? <small className="text-success mt-1">{successMessage}</small> : null}
                         </div>
                       </div>
                     </div>

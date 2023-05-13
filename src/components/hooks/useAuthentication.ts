@@ -51,7 +51,7 @@ export const useAuthentication = () => {
     const atLeastOneSpecialCharacterRegex = /[!@#$%^&*]/;
     const atLeastOneCharacterRegex = /[a-zA-Z]/;
     if (isFocused) {
-      setValidationErros({ ...validationErrors, password: "" });
+      setValidationErros({ ...validationErrors, password: "", confirmPassword: "" });
     } else {
       setValidationData({ ...validationData, password: value });
       if (!value) {
@@ -66,6 +66,8 @@ export const useAuthentication = () => {
           ...validationErrors,
           password: "Password should be of 8 or more characters with a mix of letters, numbers & symbols",
         });
+      } else if (value !== validationData.confirmPassword) {
+        setValidationErros({ ...validationErrors, confirmPassword: "Passwords didn't match" });
       }
     }
   };
@@ -74,6 +76,7 @@ export const useAuthentication = () => {
     if (isFocused) {
       setValidationErros({ ...validationErrors, confirmPassword: "" });
     } else {
+      setValidationData({ ...validationData, confirmPassword: value });
       if (!value) {
         setValidationErros({ ...validationErrors, confirmPassword: "Confirm password is required" });
       } else if (value !== validationData.password) {
@@ -96,7 +99,6 @@ export const useAuthentication = () => {
     });
   };
 
-  
   return {
     checkEmailValidation,
     checkNameValidation,

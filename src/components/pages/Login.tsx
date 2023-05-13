@@ -31,11 +31,9 @@ const LoginComponent = () => {
         .then((res) => res.json())
         .then((data) => {
           if (data.data) {
-            console.log(data.data);
             localStorage.setItem("token", data.data);
             navigate("/");
           } else {
-            console.log(data);
             setErrorMessage(data.error);
           }
         });
@@ -91,7 +89,6 @@ const LoginComponent = () => {
                             <span className="link-text">Reset Password</span>
                           </Link>
                         </div>
-                        
 
                         <div className="mb-4 mt-3">
                           <button onClick={() => login()} className="form-button w-100">
