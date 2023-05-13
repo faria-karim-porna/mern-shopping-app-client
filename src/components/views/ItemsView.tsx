@@ -1,10 +1,23 @@
-import React from "react";
-import { useAppDispatch } from "../core/redux/reduxStore";
+import React, { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../core/redux/reduxStore";
 import { UIAction } from "../core/redux/slices/UISlice";
 import { EnumModal } from "../core/enums/EnumModal";
+import { shallowEqual } from "react-redux";
+import { ItemType } from "../core/types/itemsType";
 
 const ItemsViewComponent = () => {
   const dispatch = useAppDispatch();
+  const [allData, setAllData] = useState<ItemType[] | undefined>();
+  const store = useAppSelector(
+    (state) => ({
+      itemsData: state.UI.itemsData,
+    }),
+    shallowEqual
+  );
+
+  useEffect(() => {
+    setAllData(store.itemsData);
+  }, []);
   return (
     <div className="main w-100 px-4">
       <div className="d-flex justify-content-between mt-4">
@@ -14,38 +27,38 @@ const ItemsViewComponent = () => {
         </button>
       </div>
       <div className="glass-effect mt-4">
-        <div className="table-box table-responsive">
-          <table className="table">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        {(allData?.length ?? 0) > 0 ? (
+          <div className="table-box table-responsive">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th scope="col">Id</th>
+                  <th scope="col">Product Name</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Unit Price</th>
+                  <th scope="col">Created At</th>
+                  <th scope="col">Created By</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {allData?.map((data) => (
+                  <tr key={data._id}>
+                    <th scope="row">{data.id}</th>
+                    <td>{data.name}</td>
+                    <td>{data.quantity}</td>
+                    <td>{data.unitPrice}</td>
+                    <td>{data.createdAt}</td>
+                    <td>{data.createdBy}</td>
+                    <td>Edit Delete</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div className="p-3 text-danger">No product is available yet</div>
+        )}
       </div>
     </div>
   );

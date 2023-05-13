@@ -1,11 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { MovieType } from "../../types/moviesType";
+import { MovieType, UserType } from "../../types/usersType";
 import { EnumModal } from "../../enums/EnumModal";
 import { EnumView } from "../../enums/EnumView";
+import { ItemType } from "../../types/itemsType";
 
 interface UIState {
   showModal?: EnumModal;
   view?: EnumView;
+  itemsData?: ItemType[];
+  usersData?: UserType[];
 }
 
 const initialState: UIState = {
@@ -22,6 +25,12 @@ const UISlice = createSlice({
     },
     setView(state, action: PayloadAction<EnumView>) {
       state.view = action.payload;
+    },
+    setItemData(state, action: PayloadAction<ItemType[]>) {
+      state.itemsData = action.payload;
+    },
+    setUserData(state, action: PayloadAction<UserType[]>) {
+      state.usersData = action.payload;
     },
   },
 });
