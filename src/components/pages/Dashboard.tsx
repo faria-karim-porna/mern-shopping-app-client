@@ -5,6 +5,7 @@ import { Main } from "../common/Main";
 import { GlassmorphismBackground } from "../common/GlassmorphismBackground";
 import { useAppDispatch } from "../core/redux/reduxStore";
 import { UIAction } from "../core/redux/slices/UISlice";
+import { EnumAccessType } from "../core/enums/EnumAccessType";
 
 const DashboardComponent = () => {
   const dispatch = useAppDispatch();
@@ -14,7 +15,7 @@ const DashboardComponent = () => {
         id: parseInt(localStorage.getItem("id") ?? ""),
         name: localStorage.getItem("name") ?? "",
         email: localStorage.getItem("email") ?? "",
-        accessType: localStorage.getItem("accessType") ?? "",
+        accessType: localStorage.getItem("accessType") as EnumAccessType ?? EnumAccessType.Empty,
       })
     );
     fetch("http://localhost:5000/api/getItems", {

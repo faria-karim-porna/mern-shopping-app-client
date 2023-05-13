@@ -1,3 +1,5 @@
+import { EnumAccessType } from "../enums/EnumAccessType";
+
 export type UserType = {
   _id?: string;
   id?: number;
@@ -6,6 +8,6 @@ export type UserType = {
   password?: string;
   createdAt?: string;
   createdBy?: string;
-  accessType?: string;
+  accessType?: EnumAccessType;
   creatorId?: number;
 };

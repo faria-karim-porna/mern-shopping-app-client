@@ -4,6 +4,7 @@ import { UIAction } from "../core/redux/slices/UISlice";
 import { EnumModal } from "../core/enums/EnumModal";
 import { shallowEqual } from "react-redux";
 import { ItemType } from "../core/types/itemsType";
+import { EnumAccessType } from "../core/enums/EnumAccessType";
 
 const ItemsViewComponent = () => {
   const dispatch = useAppDispatch();
@@ -11,6 +12,7 @@ const ItemsViewComponent = () => {
   const store = useAppSelector(
     (state) => ({
       itemsData: state.UI.itemsData,
+      personalData: state.UI.personalData,
     }),
     shallowEqual
   );
@@ -22,9 +24,11 @@ const ItemsViewComponent = () => {
     <div className="main w-100 px-4">
       <div className="d-flex justify-content-between mt-4">
         <input type="text" placeholder="Searh..." className="glass-effect py-2 px-3 my-2 w-50" name="Search" />
-        <button onClick={() => dispatch(UIAction.setModalView(EnumModal.UserModal))} className="form-button px-4">
-          Add Item
-        </button>
+        {store.personalData?.accessType !== EnumAccessType.User ? (
+          <button onClick={() => dispatch(UIAction.setModalView(EnumModal.UserModal))} className="form-button px-4">
+            Add Item
+          </button>
+        ) : null}
       </div>
       <div className="glass-effect mt-4">
         {(allData?.length ?? 0) > 0 ? (
@@ -38,7 +42,9 @@ const ItemsViewComponent = () => {
                   <th scope="col">Unit Price</th>
                   <th scope="col">Created At</th>
                   <th scope="col">Created By</th>
-                  <th scope="col">Action</th>
+                  {store.personalData?.accessType !== EnumAccessType.User && store.personalData?.accessType !== EnumAccessType.Moderator ? (
+                    <th scope="col">Action</th>
+                  ) : null}
                 </tr>
               </thead>
               <tbody>
@@ -50,7 +56,12 @@ const ItemsViewComponent = () => {
                     <td>{data.unitPrice}</td>
                     <td>{data.createdAt}</td>
                     <td>{data.createdBy}</td>
-                    <td>Edit Delete</td>
+                    {store.personalData?.accessType !== EnumAccessType.User &&
+                    store.personalData?.accessType !== EnumAccessType.Moderator ? (
+                      <td>
+                        <div>Edit</div> <div>Delete</div>
+                      </td>
+                    ) : null}
                   </tr>
                 ))}
               </tbody>
