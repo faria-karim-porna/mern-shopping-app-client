@@ -30,8 +30,12 @@ const LoginComponent = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          if (data.data) {
-            localStorage.setItem("token", data.data);
+          if (data.token) {
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("id", data.user.id);
+            localStorage.setItem("name", data.user.name);
+            localStorage.setItem("email", data.user.email);
+            localStorage.setItem("accessType", data.user.accessType);
             navigate("/");
           } else {
             setErrorMessage(data.error);

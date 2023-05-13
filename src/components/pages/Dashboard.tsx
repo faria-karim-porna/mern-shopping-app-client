@@ -9,6 +9,14 @@ import { UIAction } from "../core/redux/slices/UISlice";
 const DashboardComponent = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
+    dispatch(
+      UIAction.setPersonalData({
+        id: parseInt(localStorage.getItem("id") ?? ""),
+        name: localStorage.getItem("name") ?? "",
+        email: localStorage.getItem("email") ?? "",
+        accessType: localStorage.getItem("accessType") ?? "",
+      })
+    );
     fetch("http://localhost:5000/api/getItems", {
       headers: {
         Authorization:
@@ -17,7 +25,6 @@ const DashboardComponent = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("data1", data);
         dispatch(UIAction.setItemData(data.allItems));
       });
     fetch("http://localhost:5000/api/getUsers", {
@@ -28,7 +35,6 @@ const DashboardComponent = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("data2", data);
         dispatch(UIAction.setUserData(data.allUsers));
       });
   }, []);

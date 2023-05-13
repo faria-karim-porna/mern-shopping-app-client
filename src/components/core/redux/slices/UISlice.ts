@@ -9,6 +9,7 @@ interface UIState {
   view?: EnumView;
   itemsData?: ItemType[];
   usersData?: UserType[];
+  personalData?: UserType;
 }
 
 const initialState: UIState = {
@@ -31,6 +32,9 @@ const UISlice = createSlice({
     },
     setUserData(state, action: PayloadAction<UserType[]>) {
       state.usersData = action.payload;
+    },
+    setPersonalData(state, action: PayloadAction<UserType>) {
+      state.personalData = action.payload;
     },
   },
 });
