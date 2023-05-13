@@ -332,6 +332,10 @@ input:focus {
     color: rgba(0, 212, 255, 1);
 }
 
+.icon{
+    font-size: 30px;
+}
+
 .active {
     background-color: rgba(0, 212, 255, 0.5);
     color: white;
