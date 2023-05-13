@@ -10,6 +10,7 @@ interface UIState {
   itemsData?: ItemType[];
   usersData?: UserType[];
   personalData?: UserType;
+  token?: string;
 }
 
 const initialState: UIState = {
@@ -35,6 +36,9 @@ const UISlice = createSlice({
     },
     setPersonalData(state, action: PayloadAction<UserType>) {
       state.personalData = action.payload;
+    },
+    setToken(state, action: PayloadAction<string>) {
+      state.token = action.payload;
     },
   },
 });

@@ -19,7 +19,22 @@ const UsersViewComponent = () => {
 
   useEffect(() => {
     setAllData(store.usersData);
-  }, []);
+  }, [store.usersData]);
+
+  const deleteData = (id?: number) => {
+    const deletedUser = { id: id };
+    fetch("http://localhost:5000/api/deleteUsers", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${localStorage.getItem("token")}` },
+      body: JSON.stringify(deletedUser),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.users) {
+          dispatch(UIAction.setUserData(data.users));
+        }
+      });
+  };
   return (
     <div className="main w-100 px-4">
       <div className="d-flex justify-content-between mt-4">
@@ -68,7 +83,10 @@ const UsersViewComponent = () => {
                         (store.personalData?.accessType === EnumAccessType.Admin &&
                           (data.accessType === EnumAccessType.Moderator || data.accessType === EnumAccessType.User)) ||
                         (store.personalData?.accessType === EnumAccessType.Moderator && data.accessType === EnumAccessType.User) ? (
-                          <div className="delete-icon d-flex justify-content-center align-items-center mx-2">
+                          <div
+                            className="delete-icon d-flex justify-content-center align-items-center mx-2"
+                            onClick={() => deleteData(data.id)}
+                          >
                             <i className="fa fa-trash-o"></i>
                           </div>
                         ) : null}{" "}
