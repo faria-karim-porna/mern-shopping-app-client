@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Login } from "./components/pages/Login";
 import { SignUp } from "./components/pages/Signup";
 import { Dashboard } from "./components/pages/Dashboard";
-import { UserModal } from "./components/modals/UserModal";
+import { AddUserModal } from "./components/modals/AddUserModal";
 import { ResetPassword } from "./components/pages/ResetPassword";
 
 export default function App() {
@@ -17,7 +17,7 @@ export default function App() {
           <Route path="/signup" element={<SignUp />} />
         </Routes>
       </Router>
-      <UserModal />
+      <AddUserModal />
     </>
   );
 }
