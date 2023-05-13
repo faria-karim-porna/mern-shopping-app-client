@@ -168,6 +168,36 @@ body {
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+.modal-content {
+    /* width: 1400px;
+    min-height: 400px; */
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    backdrop-filter: blur(5px);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.modal-backdrop {
+    /* width: 1400px;
+    min-height: 400px; */
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    backdrop-filter: blur(15px);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
 /* =============================== Checkbox ===================================== */
 /* The checkbox-container */
 .checkbox-field {
@@ -332,7 +362,7 @@ input:focus {
     color: rgba(0, 212, 255, 1);
 }
 
-.icon{
+.icon {
     font-size: 30px;
 }
 
@@ -344,7 +374,7 @@ input:focus {
 
 /* =============================== Dashboard ===================================== */
 
-.dashboard-container{
+.dashboard-container {
     height: 75vh;
     width: 85vw;
 }
