@@ -86,6 +86,7 @@ export const useAuthentication = () => {
   };
 
   const setTermsAndCondition = () => {
+    setValidationErros({ ...validationErrors, termsAndCondition: "" });
     setValidationData({ ...validationData, termsAndCondition: !validationData.termsAndCondition });
   };
 

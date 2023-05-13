@@ -4,6 +4,8 @@ import { GlassmorphismBackground } from "../common/GlassmorphismBackground";
 import { Link } from "react-router-dom";
 
 const SignUpComponent = () => {
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const {
     checkEmailValidation,
     checkNameValidation,
@@ -21,7 +23,7 @@ const SignUpComponent = () => {
       validationErrors.email ||
       validationErrors.password ||
       validationErrors.confirmPassword ||
-      !validationErrors.termsAndCondition ||
+      validationErrors.termsAndCondition ||
       !validationData.name ||
       !validationData.email ||
       !validationData.password ||
@@ -29,30 +31,40 @@ const SignUpComponent = () => {
     ) {
       return false;
     }
+
     return true;
   };
 
   const signUp = (): void => {
     checkEmptyFieldError();
     if (isValidate()) {
-      const id = 1;
+      const date = `${new Date().getDate()}-${new Date().getMonth() + 1}-${new Date().getFullYear()}`;
+      const time = new Date().toLocaleString("en-US", { hour: "numeric", minute: "numeric", hour12: true });
+      const dateAndTime = `${date} (${time})`;
+
       const newUser = {
-        id: id,
         name: validationData.name,
         email: validationData.email,
         password: validationData.password,
-        createdAt: new Date(),
-        createdBy: "Faria",
-        accessType: "SuperAdmin",
+        createdAt: dateAndTime,
       };
-
-      // fetch("http://localhost:5000/api/createAccount", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(newUser),
-      // }).then((res) => console.log(res));
+      fetch("http://localhost:5000/api/createAccount", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newUser),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.user) {
+            setErrorMessage("");
+            setSuccessMessage(data.message);
+          } else {
+            setSuccessMessage("");
+            setErrorMessage(data.error);
+          }
+        });
     }
   };
   return (
@@ -147,6 +159,8 @@ const SignUpComponent = () => {
                           <button onClick={() => signUp()} className="form-button w-100">
                             Sign Up
                           </button>
+                          {errorMessage ? <small className="text-danger mt-1">{errorMessage}</small> : null}
+                          {successMessage ? <small className="text-success mt-1">{successMessage}</small> : null}
                         </div>
                       </div>
                     </div>
