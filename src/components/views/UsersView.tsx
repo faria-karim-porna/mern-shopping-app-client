@@ -4,6 +4,7 @@ import { UIAction } from "../core/redux/slices/UISlice";
 import { EnumModal } from "../core/enums/EnumModal";
 import { UserType } from "../core/types/usersType";
 import { shallowEqual } from "react-redux";
+import { EnumAccessType } from "../core/enums/EnumAccessType";
 
 const UsersViewComponent = () => {
   const dispatch = useAppDispatch();
@@ -11,6 +12,7 @@ const UsersViewComponent = () => {
   const store = useAppSelector(
     (state) => ({
       usersData: state.UI.usersData,
+      personalData: state.UI.personalData,
     }),
     shallowEqual
   );
@@ -50,7 +52,22 @@ const UsersViewComponent = () => {
                     <td>{data.createdAt}</td>
                     <td>{data.createdBy}</td>
                     <td>{data.accessType}</td>
-                    <td>Edit Delete</td>
+                    <td>
+                      {store.personalData?.accessType === EnumAccessType.SuperAdmin ||
+                      (store.personalData?.accessType === EnumAccessType.Admin &&
+                        (data.accessType === EnumAccessType.Admin ||
+                          data.accessType === EnumAccessType.Moderator ||
+                          data.accessType === EnumAccessType.User)) ||
+                      (store.personalData?.accessType === EnumAccessType.Moderator && data.accessType === EnumAccessType.User) ? (
+                        <div>Edit</div>
+                      ) : null}{" "}
+                      {store.personalData?.accessType === EnumAccessType.SuperAdmin ||
+                      (store.personalData?.accessType === EnumAccessType.Admin &&
+                        (data.accessType === EnumAccessType.Moderator || data.accessType === EnumAccessType.User)) ||
+                      (store.personalData?.accessType === EnumAccessType.Moderator && data.accessType === EnumAccessType.User) ? (
+                        <div>Delete</div>
+                      ) : null}{" "}
+                    </td>
                   </tr>
                 ))}
               </tbody>

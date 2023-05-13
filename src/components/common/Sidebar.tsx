@@ -3,11 +3,13 @@ import { useAppDispatch, useAppSelector } from "../core/redux/reduxStore";
 import { UIAction } from "../core/redux/slices/UISlice";
 import { EnumView } from "../core/enums/EnumView";
 import { shallowEqual } from "react-redux";
+import { EnumAccessType } from "../core/enums/EnumAccessType";
 
 const SidebarComponent = () => {
   const store = useAppSelector(
     (state) => ({
       view: state.UI.view,
+      personalData: state.UI.personalData,
     }),
     shallowEqual
   );
@@ -23,15 +25,17 @@ const SidebarComponent = () => {
         <i className="fa fa-briefcase icon"></i>
         <div>Items</div>
       </div>
-      <div
-        className={`sidebar-option d-flex flex-column justify-content-center align-items-center ${
-          store.view === EnumView.UserView ? "active" : ""
-        }`}
-        onClick={() => dispatch(UIAction.setView(EnumView.UserView))}
-      >
-        <i className="fa fa-users icon"></i>
-        <div>Users</div>
-      </div>
+      {store.personalData?.accessType !== EnumAccessType.User ? (
+        <div
+          className={`sidebar-option d-flex flex-column justify-content-center align-items-center ${
+            store.view === EnumView.UserView ? "active" : ""
+          }`}
+          onClick={() => dispatch(UIAction.setView(EnumView.UserView))}
+        >
+          <i className="fa fa-users icon"></i>
+          <div>Users</div>
+        </div>
+      ) : null}
     </div>
   );
 };
