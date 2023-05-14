@@ -107,7 +107,8 @@ const AddUserModalComponent = () => {
                         <div className="d-flex justify-content-center">
                           <div className="w-100">
                             <select
-                              className="form-select glass-effect"
+          
+                              className="glass-effect py-2 px-3 my-2 w-100"
                               aria-label="Default select example"
                               onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                                 setCurrAccessType(e.target.value as EnumAccessType);

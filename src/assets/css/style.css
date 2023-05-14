@@ -28,6 +28,11 @@ body {
     border-radius: 10px;
 }
 
+.table-scorll {
+    overflow: auto;
+    height: calc(75vh - 130px);
+}
+
 .edit-icon {
     color: #00d2ff;
     border: 1px solid #00d2ff;
@@ -53,6 +58,82 @@ body {
 .font-22 {
     font-size: 20px;
 }
+
+/* =============================== Scrollbar ===================================== */
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background-color: rgb(24, 24, 24, 0.2);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(255, 53, 155, 0.5);
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(255, 53, 155, 0.7);
+}
+
+/* =============================== Select ===================================== */
+select:focus {
+    outline: transparent;
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+option {
+    font-size: 18px;
+    background-color: rgb(255, 53, 155,0.5);
+    padding: 10px;
+    outline: transparent !important;
+    border: none !important;
+    color: white;
+    height: 100px !important;
+}
+
+option:hover {
+    background-color: red !important;
+}
+
+option:before {
+    content: ">";
+    font-size: 20px;
+    display: none;
+    padding-right: 10px;
+    padding-left: 5px;
+    color: #fff;
+    background-color: red !important;
+}
+
+option:hover:before {
+    display: inline;
+    background-color: red !important;
+}
+
+/* option:hover {
+    background-color: yellow;
+} */
+
+/* option {
+    background-color: green;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    outline: none;
+} */
 
 /* =============================== Glassmorphism ===================================== */
 .background-container {
@@ -365,11 +446,11 @@ input:focus {
     display: block;
 }
 
-.navbar-web-name{
+.navbar-web-name {
     color: #00d2ff;
 }
 
-.navbar-username{
+.navbar-username {
     color: #ff359b;
 }
 
