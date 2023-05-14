@@ -68,7 +68,7 @@ const ItemsViewComponent = () => {
       </div>
       <div className="glass-effect mt-4">
         {(allData?.length ?? 0) > 0 ? (
-          <div className="table-box table-responsive">
+          <div className="table-box table-responsive font-20">
             <table className="table">
               <thead>
                 <tr>

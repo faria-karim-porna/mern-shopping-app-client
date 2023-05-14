@@ -8,6 +8,7 @@ import { ResetPassword } from "./components/pages/ResetPassword";
 import { EditUserModal } from "./components/modals/EditUserModal";
 import { AddItemModal } from "./components/modals/AddItemModal";
 import { EditItemModal } from "./components/modals/EditItemModal";
+import { EditPersonalInfoModal } from "./components/modals/EditPersonalInfoModal";
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
       <EditUserModal />
       <AddItemModal />
       <EditItemModal />
+      <EditPersonalInfoModal />
     </>
   );
 }
