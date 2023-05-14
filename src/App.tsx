@@ -6,6 +6,8 @@ import { Dashboard } from "./components/pages/Dashboard";
 import { AddUserModal } from "./components/modals/AddUserModal";
 import { ResetPassword } from "./components/pages/ResetPassword";
 import { EditUserModal } from "./components/modals/EditUserModal";
+import { AddItemModal } from "./components/modals/AddItemModal";
+import { EditItemModal } from "./components/modals/EditItemModal";
 
 export default function App() {
   return (
@@ -20,6 +22,8 @@ export default function App() {
       </Router>
       <AddUserModal />
       <EditUserModal />
+      <AddItemModal />
+      <EditItemModal />
     </>
   );
 }
