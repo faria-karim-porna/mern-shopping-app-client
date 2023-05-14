@@ -44,6 +44,7 @@ const EditItemModalComponent = () => {
     checkEmptyFieldError();
     if (isValidate()) {
       const editedItem = {
+        id: store.editingItemData?.id,
         name: itemData.name,
         unitPrice: parseFloat(itemData.unitPrice?.toString() ?? ""),
         quantity: parseInt(itemData.quantity?.toString() ?? ""),
