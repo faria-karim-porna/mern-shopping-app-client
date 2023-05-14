@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useAppSelector } from "../core/redux/reduxStore";
 import { shallowEqual } from "react-redux";
 

@@ -1,7 +1,5 @@
 import React from "react";
-import { useAppDispatch, useAppSelector } from "../core/redux/reduxStore";
-import { UIAction } from "../core/redux/slices/UISlice";
-import { EnumModal } from "../core/enums/EnumModal";
+import { useAppSelector } from "../core/redux/reduxStore";
 import { shallowEqual } from "react-redux";
 import { EnumView } from "../core/enums/EnumView";
 import { ItemsView } from "../views/ItemsView";

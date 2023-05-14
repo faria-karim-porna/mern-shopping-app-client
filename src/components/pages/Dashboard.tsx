@@ -3,18 +3,11 @@ import { Sidebar } from "../common/Sidebar";
 import { Navbar } from "../common/Navbar";
 import { Main } from "../common/Main";
 import { GlassmorphismBackground } from "../common/GlassmorphismBackground";
-import { useAppDispatch, useAppSelector } from "../core/redux/reduxStore";
+import { useAppDispatch } from "../core/redux/reduxStore";
 import { UIAction } from "../core/redux/slices/UISlice";
 import { EnumAccessType } from "../core/enums/EnumAccessType";
-import { shallowEqual } from "react-redux";
 
 const DashboardComponent = () => {
-  const store = useAppSelector(
-    (state) => ({
-      token: state.UI.token,
-    }),
-    shallowEqual
-  );
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(UIAction.setToken(`Bearer ${localStorage.getItem("token")}`));
@@ -28,7 +21,7 @@ const DashboardComponent = () => {
     );
     fetch("http://localhost:5000/api/getItems", {
       headers: {
-        "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     })
       .then((res) => res.json())
@@ -37,7 +30,7 @@ const DashboardComponent = () => {
       });
     fetch("http://localhost:5000/api/getUsers", {
       headers: {
-        "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     })
       .then((res) => res.json())

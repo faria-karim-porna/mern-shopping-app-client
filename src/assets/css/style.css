@@ -115,7 +115,7 @@ body {
 
 .background-container .color:nth-child(2) {
     bottom: -150px;
-    Left: 100px;
+    left: 100px;
     width: 500px;
     height: 500px;
     background: #fffd87;
@@ -168,7 +168,7 @@ body {
 
 .content-container .square:nth-child(2) {
     top: 150px;
-    Left: -100px;
+    left: -100px;
     width: 120px;
     height: 120px;
     --i: 1;
@@ -184,7 +184,7 @@ body {
 
 .content-container .square:nth-child(4) {
     bottom: -80px;
-    Left: 100px;
+    left: 100px;
     width: 50px;
     height: 50px;
     --i: 3;
@@ -192,7 +192,7 @@ body {
 
 .content-container .square:nth-child(5) {
     top: -80px;
-    Left: 140px;
+    left: 140px;
     width: 60px;
     height: 60px;
     --i: 4;

@@ -1,11 +1,8 @@
-import React, { ChangeEvent, useState } from "react";
-// import { Modal } from "react-bootstrap";
+import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../core/redux/reduxStore";
 import { shallowEqual } from "react-redux";
 import { Modal } from "react-bootstrap";
 import { EnumModal } from "../core/enums/EnumModal";
-import { useAuthentication } from "../hooks/useAuthentication";
-import { EnumAccessType } from "../core/enums/EnumAccessType";
 import { UIAction } from "../core/redux/slices/UISlice";
 import { useItem } from "../hooks/useItem";
 

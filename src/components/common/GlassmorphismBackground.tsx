@@ -1,8 +1,6 @@
 import React from "react";
-import { useAppDispatch } from "../core/redux/reduxStore";
 
 const GlassmorphismBackgroundComponent = (props: React.PropsWithChildren) => {
-  const dispatch = useAppDispatch();
   return (
     <>
       <div className="background-container">
