@@ -11,6 +11,7 @@ import { UIAction } from "../core/redux/slices/UISlice";
 const AddUserModalComponent = () => {
   const dispatch = useAppDispatch();
   const [successMessage, setSuccessMessage] = useState("");
+  const [isSelectActive, setIsSelectActive] = useState(false);
   const store = useAppSelector(
     (state) => ({
       isModalOpen: state.UI.showModal === EnumModal.AddUserModal,
@@ -106,17 +107,37 @@ const AddUserModalComponent = () => {
                         {validationErrors.email ? <small className="text-danger">{validationErrors.email}</small> : null}
                         <div className="d-flex justify-content-center">
                           <div className="w-100">
-                            <select
-          
-                              className="glass-effect py-2 px-3 my-2 w-100"
-                              aria-label="Default select example"
-                              onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                                setCurrAccessType(e.target.value as EnumAccessType);
-                              }}
-                            >
-                              <option value={EnumAccessType.Admin}>Admin</option>
-                              <option value={EnumAccessType.Moderator}>Moderator</option>
-                            </select>
+                            <div className="w-100 select">
+                              <div
+                                className="glass-effect py-2 px-3 my-2 w-100 d-flex justify-content-between"
+                                onClick={() => {
+                                  setIsSelectActive(true);
+                                }}
+                              >
+                                <div>{currAccessType}</div>
+                                <i className="fa fa-caret-down down-caret-icon" aria-hidden="true"></i>
+                              </div>
+                              <div className={`glass-effect ${isSelectActive ? "d-block" : "d-none"}`}>
+                                <div
+                                  className="option py-2 px-3 w-100"
+                                  onClick={() => {
+                                    setIsSelectActive(false);
+                                    setCurrAccessType(EnumAccessType.Admin);
+                                  }}
+                                >
+                                  Admin
+                                </div>
+                                <div
+                                  className="option py-2 px-3 w-100"
+                                  onClick={() => {
+                                    setIsSelectActive(false);
+                                    setCurrAccessType(EnumAccessType.Moderator);
+                                  }}
+                                >
+                                  Moderator
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                         <div className="mb-4 mt-5">
