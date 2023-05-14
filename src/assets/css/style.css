@@ -50,6 +50,10 @@ body {
     font-size: 20px;
 }
 
+.font-22 {
+    font-size: 20px;
+}
+
 /* =============================== Glassmorphism ===================================== */
 .background-container {
     display: flex;
@@ -344,10 +348,12 @@ input:focus {
 
 .navbar-dropdown {
     display: none;
+    font-size: 18px;
+    color: white;
     top: 40px;
-    right: 0px;
+    right: 10px;
     position: absolute;
-    background: rgb(255, 53, 155, 0.5);
+    background: rgb(255, 53, 155, 0.7);
     backdrop-filter: blur(5px);
     box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.5);
@@ -355,8 +361,21 @@ input:focus {
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.navbar:hover .navbar-dropdown {
+.navbar-username-section:hover .navbar-dropdown {
     display: block;
+}
+
+.navbar-web-name{
+    color: #00d2ff;
+}
+
+.navbar-username{
+    color: #ff359b;
+}
+
+.thin-line {
+    border: 1px solid #00d2ff;
+    height: 0.5px;
 }
 
 /* =============================== Sidebar ===================================== */

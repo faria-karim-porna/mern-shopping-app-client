@@ -30,14 +30,14 @@ const NavbarComponent = () => {
       });
   };
   return (
-    <nav className="navbar navbar-expand-lg site-nav glass-effect">
+    <nav className="navbar navbar-expand-lg site-nav glass-effect font-22">
       <div className="d-flex align-items-center w-100 justify-content-between px-5">
-        <div>Shopping App</div>
-        <div className="">
-          <div>{store.personalData?.name}</div>
+        <div className="navbar-web-name fw-bold">Shopping App</div>
+        <div className="navbar-username-section">
+          <div className="navbar-username fw-bold">{store.personalData?.name}</div>
           <div className="navbar-dropdown px-4 py-3">
             <div className="d-flex justify-content-between align-items-center">
-              <div>Profile</div>
+              <div className="font-20 fw-bold">Profile</div>
               <div
                 className="edit-icon d-flex justify-content-center align-items-center mx-2"
                 onClick={() => {
@@ -48,14 +48,14 @@ const NavbarComponent = () => {
                 <i className="fa fa-pencil"></i>
               </div>
             </div>
-            <div></div>
+            <div className="thin-line my-3"></div>
             <div>{store.personalData?.name}</div>
             <div>{store.personalData?.email}</div>
             <div>
-              <span>Access Type: </span>
+              <span className="fw-bold">Access Type: </span>
               <span>{store.personalData?.accessType}</span>
             </div>
-            <div></div>
+            <div className="thin-line my-3"></div>
             <button onClick={() => logout()} className="form-button px-4 w-100">
               Logout
             </button>
