@@ -13,7 +13,7 @@ const AddUserModalComponent = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const store = useAppSelector(
     (state) => ({
-      isModalOpen: state.UI.showModal === EnumModal.UserModal,
+      isModalOpen: state.UI.showModal === EnumModal.AddUserModal,
       personalData: state.UI.personalData,
     }),
     shallowEqual
@@ -64,6 +64,11 @@ const AddUserModalComponent = () => {
         });
     }
   };
+
+  const closeModal = () => {
+    setSuccessMessage("");
+    dispatch(UIAction.setModalView(EnumModal.None));
+  };
   return (
     <>
       <Modal show={store.isModalOpen} className="p-1">
@@ -82,12 +87,7 @@ const AddUserModalComponent = () => {
                         <div>Add New User</div>
                         <div className="underline"></div>
                       </div>
-                      <i
-                        className="fa fa-times font-20 cur-point"
-                        onClick={() => {
-                          dispatch(UIAction.setModalView(EnumModal.None));
-                        }}
-                      ></i>
+                      <i className="fa fa-times font-20 cur-point" onClick={() => closeModal()}></i>
                     </div>
                     <div className="d-flex justify-content-center">
                       <div className="w-100">

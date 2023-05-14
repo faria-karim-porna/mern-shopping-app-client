@@ -1,6 +1,14 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useAppSelector } from "../core/redux/reduxStore";
+import { shallowEqual } from "react-redux";
 
 export const useAuthentication = () => {
+  const store = useAppSelector(
+    (state) => ({
+      editingUserData: state.UI.editingUserData,
+    }),
+    shallowEqual
+  );
   const [validationErrors, setValidationErros] = useState({
     name: "",
     email: "",
@@ -10,12 +18,13 @@ export const useAuthentication = () => {
   });
 
   const [validationData, setValidationData] = useState({
-    name: "",
-    email: "",
+    name: store.editingUserData ? store.editingUserData.name : "",
+    email: store.editingUserData ? store.editingUserData.email : "",
     password: "",
     confirmPassword: "",
     termsAndCondition: false,
   });
+
 
   const checkEmailValidation = (value: string, isFocused: boolean) => {
     const emailValidationRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -99,6 +108,14 @@ export const useAuthentication = () => {
       termsAndCondition: validationData.termsAndCondition ? validationErrors.termsAndCondition : "Terms & condition should be checked",
     });
   };
+
+  useMemo(() => {
+    setValidationData({
+      ...validationData,
+      name: store.editingUserData ? store.editingUserData.name : "",
+      email: store.editingUserData ? store.editingUserData.email : "",
+    });
+  }, [store.editingUserData]);
 
   return {
     checkEmailValidation,

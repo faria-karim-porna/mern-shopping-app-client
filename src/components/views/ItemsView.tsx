@@ -25,7 +25,7 @@ const ItemsViewComponent = () => {
       <div className="d-flex justify-content-between mt-4">
         <input type="text" placeholder="Searh..." className="glass-effect py-2 px-3 my-2 w-50" name="Search" />
         {store.personalData?.accessType !== EnumAccessType.User ? (
-          <button onClick={() => dispatch(UIAction.setModalView(EnumModal.UserModal))} className="form-button px-4">
+          <button onClick={() => dispatch(UIAction.setModalView(EnumModal.AddItemModal))} className="form-button px-4">
             Add Item
           </button>
         ) : null}

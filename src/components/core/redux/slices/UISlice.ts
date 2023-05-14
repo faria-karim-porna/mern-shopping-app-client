@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { MovieType, UserType } from "../../types/usersType";
+import { UserType } from "../../types/usersType";
 import { EnumModal } from "../../enums/EnumModal";
 import { EnumView } from "../../enums/EnumView";
 import { ItemType } from "../../types/itemsType";
@@ -9,6 +9,8 @@ interface UIState {
   view?: EnumView;
   itemsData?: ItemType[];
   usersData?: UserType[];
+  editingUserData?: UserType;
+  editingItemData?: ItemType;
   personalData?: UserType;
   token?: string;
 }
@@ -39,6 +41,13 @@ const UISlice = createSlice({
     },
     setToken(state, action: PayloadAction<string>) {
       state.token = action.payload;
+    },
+    setEditingItemData(state, action: PayloadAction<ItemType | undefined>) {
+      state.editingItemData = action.payload;
+    },
+    setEditingUserData(state, action: PayloadAction<UserType | undefined>) {
+      console.log(action.payload);
+      state.editingUserData = action.payload;
     },
   },
 });

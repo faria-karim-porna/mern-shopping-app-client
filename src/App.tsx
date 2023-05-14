@@ -5,6 +5,7 @@ import { SignUp } from "./components/pages/Signup";
 import { Dashboard } from "./components/pages/Dashboard";
 import { AddUserModal } from "./components/modals/AddUserModal";
 import { ResetPassword } from "./components/pages/ResetPassword";
+import { EditUserModal } from "./components/modals/EditUserModal";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
         </Routes>
       </Router>
       <AddUserModal />
+      <EditUserModal />
     </>
   );
 }

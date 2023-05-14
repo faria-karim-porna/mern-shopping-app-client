@@ -39,7 +39,7 @@ const UsersViewComponent = () => {
     <div className="main w-100 px-4">
       <div className="d-flex justify-content-between mt-4">
         <input type="text" placeholder="Searh..." className="glass-effect py-2 px-3 my-2 w-50" name="Search" />
-        <button onClick={() => dispatch(UIAction.setModalView(EnumModal.UserModal))} className="form-button px-4">
+        <button onClick={() => dispatch(UIAction.setModalView(EnumModal.AddUserModal))} className="form-button px-4">
           Add User
         </button>
       </div>
@@ -75,7 +75,13 @@ const UsersViewComponent = () => {
                             data.accessType === EnumAccessType.Moderator ||
                             data.accessType === EnumAccessType.User)) ||
                         (store.personalData?.accessType === EnumAccessType.Moderator && data.accessType === EnumAccessType.User) ? (
-                          <div className="edit-icon d-flex justify-content-center align-items-center mx-2">
+                          <div
+                            className="edit-icon d-flex justify-content-center align-items-center mx-2"
+                            onClick={() => {
+                              dispatch(UIAction.setEditingUserData(data));
+                              dispatch(UIAction.setModalView(EnumModal.EditUserModal));
+                            }}
+                          >
                             <i className="fa fa-pencil"></i>
                           </div>
                         ) : null}{" "}
