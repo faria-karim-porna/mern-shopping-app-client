@@ -26,7 +26,7 @@ const SidebarComponent = () => {
         <div className="sidebar glass-effect">
           <div
             className={`sidebar-option d-flex flex-column justify-content-center align-items-center ${
-              store.view === EnumView.ItemView ? "active" : ""
+              store.view === EnumView.ItemView || store.personalData?.accessType === EnumAccessType.User ? "active" : ""
             }`}
             onClick={() => dispatch(UIAction.setView(EnumView.ItemView))}
           >
@@ -59,7 +59,9 @@ const SidebarComponent = () => {
             </div>
           </div>
           <div
-            className={`sidebar-option d-flex align-items-center px-3 ${store.view === EnumView.ItemView ? "active" : ""}`}
+            className={`sidebar-option d-flex align-items-center px-3 ${
+              store.view === EnumView.ItemView || store.personalData?.accessType === EnumAccessType.User ? "active" : ""
+            }`}
             onClick={() => dispatch(UIAction.setView(EnumView.ItemView))}
           >
             <i className="fa fa-briefcase icon"></i>
