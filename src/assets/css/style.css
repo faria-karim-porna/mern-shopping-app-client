@@ -488,6 +488,17 @@ input:focus {
         border: 1px solid rgba(255, 255, 255, 0.5);
         border-right: 1px solid rgba(255, 255, 255, 0.2);
         border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        animation: sidebarAnimationTablet 0.5s ease-in-out;
+    }
+
+    @keyframes sidebarAnimationTablet {
+        0% {
+            left: -50%;
+        }
+
+        100% {
+            left: 0px;
+        }
     }
 
     .sidebar-option {
@@ -532,7 +543,20 @@ input:focus {
         border: 1px solid rgba(255, 255, 255, 0.5);
         border-right: 1px solid rgba(255, 255, 255, 0.2);
         border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        animation: sidebarAnimationMobile 0.5s ease-in-out;
     }
+
+    @keyframes sidebarAnimationMobile {
+        0% {
+            left: -100%;
+        }
+
+        100% {
+            left: 0px;
+        }
+    }
+
+
 
     .sidebar-option {
         height: 44px;

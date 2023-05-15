@@ -11,6 +11,7 @@ const SidebarComponent = () => {
     (state) => ({
       view: state.UI.view,
       personalData: state.UI.personalData,
+      isDrawerOpen: state.UI.isDrawerOpen,
     }),
     shallowEqual
   );
@@ -45,17 +46,20 @@ const SidebarComponent = () => {
           ) : null}
         </div>
       ) : (
-        <div className="sidebar d-block">
+        <div className={`sidebar ${store.isDrawerOpen ? "d-block" : "d-none"}`}>
           <div className="navbar-web-name fw-bold d-flex justify-content-between px-3 py-3">
             <div>Shopping App</div>
-            <div>
-              <i className="fa fa-times cur-point" onClick={() => {}}></i>
+            <div
+              className="px-3 py-1"
+              onClick={() => {
+                dispatch(UIAction.setIsDrawerOpen(false));
+              }}
+            >
+              <i className="fa fa-times cur-point"></i>
             </div>
           </div>
           <div
-            className={`sidebar-option d-flex align-items-center px-3 ${
-              store.view === EnumView.ItemView ? "active" : ""
-            }`}
+            className={`sidebar-option d-flex align-items-center px-3 ${store.view === EnumView.ItemView ? "active" : ""}`}
             onClick={() => dispatch(UIAction.setView(EnumView.ItemView))}
           >
             <i className="fa fa-briefcase icon"></i>
@@ -63,9 +67,7 @@ const SidebarComponent = () => {
           </div>
           {store.personalData?.accessType !== EnumAccessType.User ? (
             <div
-              className={`sidebar-option d-flex align-items-center px-3 ${
-                store.view === EnumView.UserView ? "active" : ""
-              }`}
+              className={`sidebar-option d-flex align-items-center px-3 ${store.view === EnumView.UserView ? "active" : ""}`}
               onClick={() => dispatch(UIAction.setView(EnumView.UserView))}
             >
               <i className="fa fa-users icon"></i>

@@ -45,7 +45,7 @@ const NavbarComponent = () => {
             <div
               className="navbar-web-name fw-bold"
               onClick={() => {
-                //open drawer
+                dispatch(UIAction.setIsDrawerOpen(true));
               }}
             >
               <i className="fa fa-bars" aria-hidden="true"></i>

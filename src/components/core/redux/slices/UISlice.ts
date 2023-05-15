@@ -13,6 +13,7 @@ interface UIState {
   editingItemData?: ItemType;
   personalData?: UserType;
   token?: string;
+  isDrawerOpen?: boolean;
 }
 
 const initialState: UIState = {
@@ -46,8 +47,10 @@ const UISlice = createSlice({
       state.editingItemData = action.payload;
     },
     setEditingUserData(state, action: PayloadAction<UserType | undefined>) {
-      console.log(action.payload);
       state.editingUserData = action.payload;
+    },
+    setIsDrawerOpen(state, action: PayloadAction<boolean | undefined>) {
+      state.isDrawerOpen = action.payload;
     },
   },
 });
