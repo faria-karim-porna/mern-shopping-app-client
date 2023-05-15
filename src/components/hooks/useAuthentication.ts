@@ -25,7 +25,6 @@ export const useAuthentication = () => {
     termsAndCondition: false,
   });
 
-
   const checkEmailValidation = (value: string, isFocused: boolean) => {
     const emailValidationRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (isFocused) {
@@ -57,7 +56,7 @@ export const useAuthentication = () => {
   const checkPasswordValidation = (value: string, isFocused: boolean) => {
     const minimumPassLength = 8;
     const atLeastOneNumberRegex = /\d/;
-    const atLeastOneSpecialCharacterRegex = /[!@#$%^&*]/;
+    // const atLeastOneSpecialCharacterRegex = /^(?=.*[@#$%^&+=])[a-zA-Z0-9@#$%^&+=]*$/;
     const atLeastOneCharacterRegex = /[a-zA-Z]/;
     if (isFocused) {
       setValidationErros({ ...validationErrors, password: "", confirmPassword: "" });
@@ -68,12 +67,11 @@ export const useAuthentication = () => {
       } else if (
         value.length < minimumPassLength ||
         !atLeastOneNumberRegex.test(value) ||
-        !atLeastOneCharacterRegex.test(value) ||
-        !atLeastOneSpecialCharacterRegex.test(value)
+        !atLeastOneCharacterRegex.test(value)
       ) {
         setValidationErros({
           ...validationErrors,
-          password: "Password should be of 8 or more characters with a mix of letters, numbers & symbols",
+          password: "Password should be of 8 or more characters with a mix of letters & numbers",
         });
       } else if (value !== validationData.confirmPassword) {
         setValidationErros({ ...validationErrors, confirmPassword: "Passwords didn't match" });
@@ -126,5 +124,6 @@ export const useAuthentication = () => {
     checkEmptyFieldError,
     validationErrors,
     validationData,
+    setValidationErros
   };
 };
