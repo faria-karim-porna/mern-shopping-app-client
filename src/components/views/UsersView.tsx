@@ -70,7 +70,13 @@ const UsersViewComponent = () => {
           onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchKey(e.target.value)}
         />
         <button onClick={() => dispatch(UIAction.setModalView(EnumModal.AddUserModal))} className="form-button px-4">
-          Add User
+          {isDesktop || isTablet ? (
+            <>
+              <i className="fa fa-plus plus-icon mr-1" aria-hidden="true"></i> Add User
+            </>
+          ) : (
+            <i className="fa fa-plus plus-icon mr-1" aria-hidden="true"></i>
+          )}
         </button>
       </div>
 

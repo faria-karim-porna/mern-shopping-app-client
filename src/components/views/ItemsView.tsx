@@ -70,8 +70,17 @@ const ItemsViewComponent = () => {
           onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchKey(e.target.value)}
         />
         {store.personalData?.accessType !== EnumAccessType.User ? (
-          <button onClick={() => dispatch(UIAction.setModalView(EnumModal.AddItemModal))} className="form-button px-4">
-            Add Item
+          <button
+            onClick={() => dispatch(UIAction.setModalView(EnumModal.AddItemModal))}
+            className="form-button px-4 d-flex align-items-center"
+          >
+            {isDesktop || isTablet ? (
+              <>
+                <i className="fa fa-plus plus-icon mr-1" aria-hidden="true"></i> Add Item
+              </>
+            ) : (
+              <i className="fa fa-plus plus-icon mr-1" aria-hidden="true"></i>
+            )}
           </button>
         ) : null}
       </div>
