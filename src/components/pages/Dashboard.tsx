@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { Sidebar } from "../common/Sidebar";
 import { Navbar } from "../common/Navbar";
 import { Main } from "../common/Main";
@@ -6,6 +6,7 @@ import { GlassmorphismBackground } from "../common/GlassmorphismBackground";
 import { useAppDispatch } from "../core/redux/reduxStore";
 import { UIAction } from "../core/redux/slices/UISlice";
 import { EnumAccessType } from "../core/enums/EnumAccessType";
+import { Utility } from "../utils/utility";
 
 const DashboardComponent = () => {
   const dispatch = useAppDispatch();
@@ -38,12 +39,17 @@ const DashboardComponent = () => {
         dispatch(UIAction.setUserData(data.allUsers));
       });
   }, []);
+
+  const isDesktop = useMemo(
+    () => Utility.BrowserWindowUtil.DeviceRenderCategory.Desktop.some(Utility.BrowserWindowUtil.IsCurrentRenderDevice),
+    []
+  );
   return (
     <>
       <Navbar />
       <GlassmorphismBackground>
         <div className="glass-effect d-flex dashboard-container">
-          <Sidebar />
+          {isDesktop ? <Sidebar /> : null}
           <Main />
         </div>
       </GlassmorphismBackground>

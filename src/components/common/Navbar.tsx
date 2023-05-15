@@ -33,6 +33,7 @@ const NavbarComponent = () => {
     <nav className="navbar navbar-expand-lg site-nav glass-effect font-22">
       <div className="d-flex align-items-center w-100 justify-content-between px-5">
         <div className="navbar-web-name fw-bold">Shopping App</div>
+        <div className="drawer-sidebar d-none">hello</div>
         <div className="navbar-username-section">
           <div className="navbar-username fw-bold">{store.personalData?.name}</div>
           <div className="navbar-dropdown px-4 py-3">

@@ -1,10 +1,11 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../core/redux/reduxStore";
 import { UIAction } from "../core/redux/slices/UISlice";
 import { EnumModal } from "../core/enums/EnumModal";
 import { shallowEqual } from "react-redux";
 import { ItemType } from "../core/types/itemsType";
 import { EnumAccessType } from "../core/enums/EnumAccessType";
+import { Utility } from "../utils/utility";
 
 const ItemsViewComponent = () => {
   const dispatch = useAppDispatch();
@@ -50,6 +51,14 @@ const ItemsViewComponent = () => {
         }
       });
   };
+  const isDesktop = useMemo(
+    () => Utility.BrowserWindowUtil.DeviceRenderCategory.Desktop.some(Utility.BrowserWindowUtil.IsCurrentRenderDevice),
+    []
+  );
+  const isTablet = useMemo(
+    () => Utility.BrowserWindowUtil.DeviceRenderCategory.Tablet.some(Utility.BrowserWindowUtil.IsCurrentRenderDevice),
+    []
+  );
   return (
     <div className="main w-100 px-4">
       <div className="d-flex justify-content-between mt-4">
@@ -68,55 +77,183 @@ const ItemsViewComponent = () => {
       </div>
       <div className="glass-effect mt-4">
         {(allData?.length ?? 0) > 0 ? (
-          <div className="table-box table-responsive font-20 table-scroll">
+          <div className={`table-box table-responsive ${isDesktop ? "font-20" : isTablet ? "font-16" : "font-12"} table-scroll`}>
             <table className="table">
               <thead>
-                <tr>
-                  <th scope="col">Id</th>
-                  <th scope="col">Product Name</th>
-                  <th scope="col">Quantity</th>
-                  <th scope="col">Unit Price</th>
-                  <th scope="col">Created At</th>
-                  <th scope="col">Created By</th>
-                  {store.personalData?.accessType !== EnumAccessType.User && store.personalData?.accessType !== EnumAccessType.Moderator ? (
-                    <th scope="col">Action</th>
-                  ) : null}
-                </tr>
-              </thead>
-              <tbody>
-                {allData?.map((data) => (
-                  <tr key={data._id}>
-                    <th scope="row">{data.id}</th>
-                    <td>{data.name}</td>
-                    <td>{data.quantity}</td>
-                    <td>{data.unitPrice}</td>
-                    <td>{data.createdAt}</td>
-                    <td>{data.createdBy}</td>
+                {isDesktop ? (
+                  <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Unit Price</th>
+                    <th scope="col">Created At</th>
+                    <th scope="col">Created By</th>
                     {store.personalData?.accessType !== EnumAccessType.User &&
                     store.personalData?.accessType !== EnumAccessType.Moderator ? (
-                      <td>
-                        <div className="d-flex">
-                          <div
-                            className="edit-icon d-flex justify-content-center align-items-center mx-2"
-                            onClick={() => {
-                              dispatch(UIAction.setEditingItemData(data));
-                              dispatch(UIAction.setModalView(EnumModal.EditItemModal));
-                            }}
-                          >
-                            <i className="fa fa-pencil"></i>
-                          </div>
-                          <div
-                            className="delete-icon d-flex justify-content-center align-items-center mx-2"
-                            onClick={() => deleteData(data.id)}
-                          >
-                            <i className="fa fa-trash-o"></i>
-                          </div>
-                        </div>
-                      </td>
+                      <th scope="col">Action</th>
                     ) : null}
                   </tr>
-                ))}
-              </tbody>
+                ) : isTablet ? (
+                  <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Product Info</th>
+                    <th scope="col">Creation Info</th>
+                    {store.personalData?.accessType !== EnumAccessType.User &&
+                    store.personalData?.accessType !== EnumAccessType.Moderator ? (
+                      <th scope="col">Action</th>
+                    ) : null}
+                  </tr>
+                ) : (
+                  <tr>
+                    <th scope="col">Product Info</th>
+                    {store.personalData?.accessType !== EnumAccessType.User &&
+                    store.personalData?.accessType !== EnumAccessType.Moderator ? (
+                      <th scope="col">Action</th>
+                    ) : null}
+                  </tr>
+                )}
+              </thead>
+              {isDesktop ? (
+                <tbody>
+                  {allData?.map((data) => (
+                    <tr key={data._id}>
+                      <th scope="row">{data.id}</th>
+                      <td>{data.name}</td>
+                      <td>{data.quantity}</td>
+                      <td>{data.unitPrice}</td>
+                      <td>{data.createdAt}</td>
+                      <td>{data.createdBy}</td>
+                      {store.personalData?.accessType !== EnumAccessType.User &&
+                      store.personalData?.accessType !== EnumAccessType.Moderator ? (
+                        <td>
+                          <div className="d-flex">
+                            <div
+                              className="edit-icon d-flex justify-content-center align-items-center mx-2"
+                              onClick={() => {
+                                dispatch(UIAction.setEditingItemData(data));
+                                dispatch(UIAction.setModalView(EnumModal.EditItemModal));
+                              }}
+                            >
+                              <i className="fa fa-pencil"></i>
+                            </div>
+                            <div
+                              className="delete-icon d-flex justify-content-center align-items-center mx-2"
+                              onClick={() => deleteData(data.id)}
+                            >
+                              <i className="fa fa-trash-o"></i>
+                            </div>
+                          </div>
+                        </td>
+                      ) : null}
+                    </tr>
+                  ))}
+                </tbody>
+              ) : isTablet ? (
+                <tbody>
+                  {allData?.map((data) => (
+                    <tr key={data._id}>
+                      <th scope="row">{data.id}</th>
+                      <td>
+                        <div>
+                          <span className="fw-bold">Name: </span>
+                          <span>{data.name}</span>
+                        </div>
+                        <div>
+                          <span className="fw-bold">Qty: </span>
+                          <span>{data.quantity}</span>
+                        </div>
+                        <div>
+                          <span className="fw-bold">Unit Price: </span>
+                          <span>{data.unitPrice}</span>
+                        </div>
+                      </td>
+                      <td>
+                        <div>
+                          <span className="fw-bold">Created At: </span>
+                          <span>{data.createdAt}</span>
+                        </div>
+                        <div>
+                          <span className="fw-bold">Created By: </span>
+                          <span>{data.createdBy}</span>
+                        </div>
+                      </td>
+                      {store.personalData?.accessType !== EnumAccessType.User &&
+                      store.personalData?.accessType !== EnumAccessType.Moderator ? (
+                        <td>
+                          <div className="d-flex">
+                            <div
+                              className="edit-icon d-flex justify-content-center align-items-center mx-2"
+                              onClick={() => {
+                                dispatch(UIAction.setEditingItemData(data));
+                                dispatch(UIAction.setModalView(EnumModal.EditItemModal));
+                              }}
+                            >
+                              <i className="fa fa-pencil"></i>
+                            </div>
+                            <div
+                              className="delete-icon d-flex justify-content-center align-items-center mx-2"
+                              onClick={() => deleteData(data.id)}
+                            >
+                              <i className="fa fa-trash-o"></i>
+                            </div>
+                          </div>
+                        </td>
+                      ) : null}
+                    </tr>
+                  ))}
+                </tbody>
+              ) : (
+                <tbody>
+                  {allData?.map((data) => (
+                    <tr key={data._id}>
+                      <td>
+                        <div>
+                          <span className="fw-bold"># </span>
+                          <span>{data.id}</span> <span>{data.name}</span>
+                        </div>
+                        <div>
+                          <span className="fw-bold">Qty: </span>
+                          <span>{data.quantity}</span>
+                        </div>
+                        <div>
+                          <span className="fw-bold">Unit Price: </span>
+                          <span>{data.unitPrice}</span>
+                        </div>
+                        <div>
+                          <span className="fw-bold">Created At: </span>
+                          <span>{data.createdAt}</span>
+                        </div>
+                        <div>
+                          <span className="fw-bold">Created By: </span>
+                          <span>{data.createdBy}</span>
+                        </div>
+                      </td>
+                      {store.personalData?.accessType !== EnumAccessType.User &&
+                      store.personalData?.accessType !== EnumAccessType.Moderator ? (
+                        <td>
+                          <div className="d-flex">
+                            <div
+                              className="edit-icon d-flex justify-content-center align-items-center mx-2"
+                              onClick={() => {
+                                dispatch(UIAction.setEditingItemData(data));
+                                dispatch(UIAction.setModalView(EnumModal.EditItemModal));
+                              }}
+                            >
+                              <i className="fa fa-pencil"></i>
+                            </div>
+                            <div
+                              className="delete-icon d-flex justify-content-center align-items-center mx-2"
+                              onClick={() => deleteData(data.id)}
+                            >
+                              <i className="fa fa-trash-o"></i>
+                            </div>
+                          </div>
+                        </td>
+                      ) : null}
+                    </tr>
+                  ))}
+                </tbody>
+              )}
             </table>
           </div>
         ) : (
