@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "../core/redux/reduxStore";
 import { shallowEqual } from "react-redux";
 import { UIAction } from "../core/redux/slices/UISlice";
 import { useNavigate } from "react-router-dom";
 import { EnumModal } from "../core/enums/EnumModal";
+import { Utility } from "../utils/utility";
+import { Sidebar } from "./Sidebar";
 
 const NavbarComponent = () => {
   const dispatch = useAppDispatch();
@@ -29,11 +31,28 @@ const NavbarComponent = () => {
         }
       });
   };
+  const isDesktop = useMemo(
+    () => Utility.BrowserWindowUtil.DeviceRenderCategory.Desktop.some(Utility.BrowserWindowUtil.IsCurrentRenderDevice),
+    []
+  );
   return (
     <nav className="navbar navbar-expand-lg site-nav glass-effect font-22">
       <div className="d-flex align-items-center w-100 justify-content-between px-5">
-        <div className="navbar-web-name fw-bold">Shopping App</div>
-        <div className="drawer-sidebar d-none">hello</div>
+        {isDesktop ? (
+          <div className="navbar-web-name fw-bold">Shopping App</div>
+        ) : (
+          <>
+            <div
+              className="navbar-web-name fw-bold"
+              onClick={() => {
+                //open drawer
+              }}
+            >
+              <i className="fa fa-bars" aria-hidden="true"></i>
+            </div>
+            <Sidebar />
+          </>
+        )}
         <div className="navbar-username-section">
           <div className="navbar-username fw-bold">{store.personalData?.name}</div>
           <div className="navbar-dropdown px-4 py-3">

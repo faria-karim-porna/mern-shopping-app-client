@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "../core/redux/reduxStore";
 import { UIAction } from "../core/redux/slices/UISlice";
 import { EnumView } from "../core/enums/EnumView";
 import { shallowEqual } from "react-redux";
 import { EnumAccessType } from "../core/enums/EnumAccessType";
+import { Utility } from "../utils/utility";
 
 const SidebarComponent = () => {
   const store = useAppSelector(
@@ -14,29 +15,60 @@ const SidebarComponent = () => {
     shallowEqual
   );
   const dispatch = useAppDispatch();
+  const isDesktop = useMemo(
+    () => Utility.BrowserWindowUtil.DeviceRenderCategory.Desktop.some(Utility.BrowserWindowUtil.IsCurrentRenderDevice),
+    []
+  );
   return (
-    <div className="sidebar glass-effect">
-      <div
-        className={`sidebar-option d-flex flex-column justify-content-center align-items-center ${
-          store.view === EnumView.ItemView ? "active" : ""
-        }`}
-        onClick={() => dispatch(UIAction.setView(EnumView.ItemView))}
-      >
-        <i className="fa fa-briefcase icon"></i>
-        <div>Items</div>
-      </div>
-      {store.personalData?.accessType !== EnumAccessType.User ? (
-        <div
-          className={`sidebar-option d-flex flex-column justify-content-center align-items-center ${
-            store.view === EnumView.UserView ? "active" : ""
-          }`}
-          onClick={() => dispatch(UIAction.setView(EnumView.UserView))}
-        >
-          <i className="fa fa-users icon"></i>
-          <div>Users</div>
+    <>
+      {isDesktop ? (
+        <div className="sidebar glass-effect">
+          <div
+            className={`sidebar-option d-flex flex-column justify-content-center align-items-center ${
+              store.view === EnumView.ItemView ? "active" : ""
+            }`}
+            onClick={() => dispatch(UIAction.setView(EnumView.ItemView))}
+          >
+            <i className="fa fa-briefcase icon"></i>
+            <div>Items</div>
+          </div>
+          {store.personalData?.accessType !== EnumAccessType.User ? (
+            <div
+              className={`sidebar-option d-flex flex-column justify-content-center align-items-center ${
+                store.view === EnumView.UserView ? "active" : ""
+              }`}
+              onClick={() => dispatch(UIAction.setView(EnumView.UserView))}
+            >
+              <i className="fa fa-users icon"></i>
+              <div>Users</div>
+            </div>
+          ) : null}
         </div>
-      ) : null}
-    </div>
+      ) : (
+        <div className="sidebar d-block">
+          <div
+            className={`sidebar-option d-flex flex-column justify-content-center align-items-center ${
+              store.view === EnumView.ItemView ? "active" : ""
+            }`}
+            onClick={() => dispatch(UIAction.setView(EnumView.ItemView))}
+          >
+            <i className="fa fa-briefcase icon"></i>
+            <div>Items</div>
+          </div>
+          {store.personalData?.accessType !== EnumAccessType.User ? (
+            <div
+              className={`sidebar-option d-flex flex-column justify-content-center align-items-center ${
+                store.view === EnumView.UserView ? "active" : ""
+              }`}
+              onClick={() => dispatch(UIAction.setView(EnumView.UserView))}
+            >
+              <i className="fa fa-users icon"></i>
+              <div>Users</div>
+            </div>
+          ) : null}
+        </div>
+      )}
+    </>
   );
 };
 
