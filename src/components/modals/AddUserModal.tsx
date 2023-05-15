@@ -23,10 +23,12 @@ const AddUserModalComponent = () => {
     store.personalData?.accessType === EnumAccessType.Moderator ? EnumAccessType.Moderator : EnumAccessType.Admin
   );
 
-  const { checkEmailValidation, checkEmptyFieldError, validationErrors, validationData } = useAuthentication();
+  const { checkEmailValidation, checkEmptyFieldError, validationErrors, validationData, setValidationErros, setValidationData } =
+    useAuthentication();
 
   const isValidate = (): boolean => {
     if (validationErrors.email || !validationData.email) {
+      console.log(validationErrors.email, "to to", !validationData.email);
       return false;
     }
 
@@ -66,6 +68,21 @@ const AddUserModalComponent = () => {
   };
 
   const closeModal = () => {
+    setValidationErros({
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      termsAndCondition: "",
+    });
+    setValidationData({
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      termsAndCondition: false,
+    });
+    setCurrAccessType(store.personalData?.accessType === EnumAccessType.Moderator ? EnumAccessType.Moderator : EnumAccessType.Admin);
     setSuccessMessage("");
     dispatch(UIAction.setModalView(EnumModal.None));
   };
@@ -96,6 +113,7 @@ const AddUserModalComponent = () => {
                           placeholder="Email"
                           className="w-100 glass-effect py-2 px-3 my-2"
                           name="Email"
+                          defaultValue={validationData.email}
                           onBlur={(e: any) => {
                             checkEmailValidation(e.target.value, false);
                           }}

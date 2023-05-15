@@ -124,6 +124,7 @@ export const useAuthentication = () => {
     checkEmptyFieldError,
     validationErrors,
     validationData,
-    setValidationErros
+    setValidationErros,
+    setValidationData
   };
 };
