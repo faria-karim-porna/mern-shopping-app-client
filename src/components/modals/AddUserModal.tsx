@@ -81,6 +81,7 @@ const AddUserModalComponent = () => {
       confirmPassword: "",
       termsAndCondition: false,
     });
+    setIsSelectActive(false);
     setCurrAccessType(store.personalData?.accessType === EnumAccessType.Moderator ? EnumAccessType.Moderator : EnumAccessType.Admin);
     setSuccessMessage("");
     dispatch(UIAction.setModalView(EnumModal.None));

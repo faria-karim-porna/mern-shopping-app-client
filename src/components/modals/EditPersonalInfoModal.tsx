@@ -26,12 +26,21 @@ const EditPersonalInfoModalComponent = () => {
   }, [store.editingUserData]);
 
   const closeModal = () => {
+    setValidationErros({
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      termsAndCondition: "",
+    });
+    setIsSelectActive(false);
     setSuccessMessage("");
     dispatch(UIAction.setEditingUserData(undefined));
     dispatch(UIAction.setModalView(EnumModal.None));
   };
 
-  const { checkNameValidation, checkEmailValidation, checkEmptyFieldError, validationErrors, validationData } = useAuthentication();
+  const { checkNameValidation, checkEmailValidation, checkEmptyFieldError, validationErrors, validationData, setValidationErros } =
+    useAuthentication();
 
   const isValidate = (): boolean => {
     if (validationErrors.name || validationErrors.email || !validationData.name || !validationData.email) {
@@ -50,26 +59,26 @@ const EditPersonalInfoModalComponent = () => {
         email: validationData.email,
         accessType: currAccessType,
       };
-      fetch("http://localhost:5000/api/updateUsers", {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify(editedUser),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.users) {
-            setSuccessMessage(data.message);
-            dispatch(UIAction.setUserData(data.users));
-            dispatch(UIAction.setPersonalData(data.user));
-            localStorage.setItem("id", data.user.id);
-            localStorage.setItem("name", data.user.name);
-            localStorage.setItem("email", data.user.email);
-            localStorage.setItem("accessType", data.user.accessType);
-          }
-        });
+      // fetch("http://localhost:5000/api/updateUsers", {
+      //   method: "PATCH",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     Authorization: `Bearer ${localStorage.getItem("token")}`,
+      //   },
+      //   body: JSON.stringify(editedUser),
+      // })
+      //   .then((res) => res.json())
+      //   .then((data) => {
+      //     if (data.users) {
+      //       setSuccessMessage(data.message);
+      //       dispatch(UIAction.setUserData(data.users));
+      //       dispatch(UIAction.setPersonalData(data.user));
+      //       localStorage.setItem("id", data.user.id);
+      //       localStorage.setItem("name", data.user.name);
+      //       localStorage.setItem("email", data.user.email);
+      //       localStorage.setItem("accessType", data.user.accessType);
+      //     }
+      //   });
     }
   };
   return (

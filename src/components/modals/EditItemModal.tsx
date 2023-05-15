@@ -20,8 +20,15 @@ const EditItemModalComponent = () => {
     shallowEqual
   );
 
-  const { checkNameValidation, checkQuantityValidation, checkUnitPriceValidation, checkEmptyFieldError, itemInfoErrors, itemData } =
-    useItem();
+  const {
+    checkNameValidation,
+    checkQuantityValidation,
+    checkUnitPriceValidation,
+    checkEmptyFieldError,
+    itemInfoErrors,
+    itemData,
+    setItemInfoErrors,
+  } = useItem();
 
   const isValidate = (): boolean => {
     if (
@@ -66,6 +73,11 @@ const EditItemModalComponent = () => {
   };
 
   const closeModal = () => {
+    setItemInfoErrors({
+      name: "",
+      unitPrice: "",
+      quantity: "",
+    });
     setSuccessMessage("");
     dispatch(UIAction.setEditingItemData(undefined));
     dispatch(UIAction.setModalView(EnumModal.None));

@@ -26,12 +26,21 @@ const EditUserModalComponent = () => {
   }, [store.editingUserData]);
 
   const closeModal = () => {
+    setValidationErros({
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      termsAndCondition: "",
+    });
+    setIsSelectActive(false);
     setSuccessMessage("");
     dispatch(UIAction.setEditingUserData(undefined));
     dispatch(UIAction.setModalView(EnumModal.None));
   };
 
-  const { checkNameValidation, checkEmailValidation, checkEmptyFieldError, validationErrors, validationData } = useAuthentication();
+  const { checkNameValidation, checkEmailValidation, checkEmptyFieldError, validationErrors, validationData, setValidationErros } =
+    useAuthentication();
 
   const isValidate = (): boolean => {
     if (validationErrors.name || validationErrors.email || !validationData.name || !validationData.email) {
