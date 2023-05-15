@@ -64,11 +64,7 @@ export const useAuthentication = () => {
       setValidationData({ ...validationData, password: value });
       if (!value) {
         setValidationErros({ ...validationErrors, password: "Password is required" });
-      } else if (
-        value.length < minimumPassLength ||
-        !atLeastOneNumberRegex.test(value) ||
-        !atLeastOneCharacterRegex.test(value)
-      ) {
+      } else if (value.length < minimumPassLength || !atLeastOneNumberRegex.test(value) || !atLeastOneCharacterRegex.test(value)) {
         setValidationErros({
           ...validationErrors,
           password: "Password should be of 8 or more characters with a mix of letters & numbers",
@@ -125,6 +121,6 @@ export const useAuthentication = () => {
     validationErrors,
     validationData,
     setValidationErros,
-    setValidationData
+    setValidationData,
   };
 };

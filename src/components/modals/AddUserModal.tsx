@@ -28,7 +28,6 @@ const AddUserModalComponent = () => {
 
   const isValidate = (): boolean => {
     if (validationErrors.email || !validationData.email) {
-      console.log(validationErrors.email, "to to", !validationData.email);
       return false;
     }
 

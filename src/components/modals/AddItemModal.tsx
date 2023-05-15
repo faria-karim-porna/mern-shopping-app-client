@@ -18,8 +18,16 @@ const AddItemModalComponent = () => {
     shallowEqual
   );
 
-  const { checkNameValidation, checkQuantityValidation, checkUnitPriceValidation, checkEmptyFieldError, itemInfoErrors, itemData } =
-    useItem();
+  const {
+    checkNameValidation,
+    checkQuantityValidation,
+    checkUnitPriceValidation,
+    checkEmptyFieldError,
+    itemInfoErrors,
+    itemData,
+    setItemData,
+    setItemInfoErrors,
+  } = useItem();
 
   const isValidate = (): boolean => {
     if (
@@ -70,6 +78,16 @@ const AddItemModalComponent = () => {
   };
 
   const closeModal = () => {
+    setItemInfoErrors({
+      name: "",
+      unitPrice: "",
+      quantity: "",
+    });
+    setItemData({
+      name: "",
+      unitPrice: "",
+      quantity: "",
+    });
     setSuccessMessage("");
     dispatch(UIAction.setModalView(EnumModal.None));
   };
@@ -100,6 +118,7 @@ const AddItemModalComponent = () => {
                           placeholder="Name"
                           className="w-100 glass-effect py-2 px-3 my-2"
                           name="Name"
+                          defaultValue={itemData.name}
                           onBlur={(e: any) => {
                             checkNameValidation(e.target.value, false);
                           }}
@@ -113,6 +132,7 @@ const AddItemModalComponent = () => {
                           placeholder="Quantity"
                           className="w-100 glass-effect py-2 px-3 my-2"
                           name="Quantity"
+                          defaultValue={itemData.quantity}
                           onBlur={(e: any) => {
                             checkQuantityValidation(e.target.value, false);
                           }}
@@ -126,6 +146,7 @@ const AddItemModalComponent = () => {
                           placeholder="Unit Price"
                           className="w-100 glass-effect py-2 px-3 my-2"
                           name="Unit Price"
+                          defaultValue={itemData.unitPrice}
                           onBlur={(e: any) => {
                             checkUnitPriceValidation(e.target.value, false);
                           }}

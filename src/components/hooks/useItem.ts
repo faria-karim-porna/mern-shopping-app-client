@@ -85,5 +85,7 @@ export const useItem = () => {
     checkEmptyFieldError,
     itemInfoErrors,
     itemData,
+    setItemInfoErrors,
+    setItemData,
   };
 };
