@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { GlassmorphismBackground } from "../common/GlassmorphismBackground";
 import { Link } from "react-router-dom";
 import { useAuthentication } from "../hooks/useAuthentication";
+import { useHeightUptoBottomById } from "../hooks/useHeightToBottomById";
 
 const ResetPasswordComponent = () => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -55,6 +56,7 @@ const ResetPasswordComponent = () => {
         });
     }
   };
+
   return (
     <GlassmorphismBackground>
       <div className="d-flex justify-content-center align-items-center">

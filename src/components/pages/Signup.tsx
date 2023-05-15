@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useAuthentication } from "../hooks/useAuthentication";
 import { GlassmorphismBackground } from "../common/GlassmorphismBackground";
 import { Link } from "react-router-dom";
+import { useHeightUptoBottomById } from "../hooks/useHeightToBottomById";
 
 const SignUpComponent = () => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -67,11 +68,14 @@ const SignUpComponent = () => {
         });
     }
   };
+
+  const id = "sign-up-section";
+  let { height } = useHeightUptoBottomById(id, []);
   return (
     <GlassmorphismBackground>
-      <div className="d-flex justify-content-center align-items-center">
+      <div className="">
         {/* <!-- sign up section start --> */}
-        <div className="d-flex justify-content-center w-100">
+        <div className="d-flex justify-content-center w-100 overflow-auto" id={id} style={{ height: height }}>
           {/* <!-- sign up background start --> */}
           <div className="form-view">
             <div className="sub-section-name pl-4 text-center">Shopping App</div>
