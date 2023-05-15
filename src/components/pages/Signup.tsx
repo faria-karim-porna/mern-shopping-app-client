@@ -59,7 +59,7 @@ const SignUpComponent = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          if (data.user) {
+          if (data.users) {
             setErrorMessage("");
             setSuccessMessage(data.message);
           } else {

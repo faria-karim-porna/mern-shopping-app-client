@@ -131,8 +131,7 @@ const EditPersonalInfoModalComponent = () => {
                           }}
                         />
                         {validationErrors.email ? <small className="text-danger">{validationErrors.email}</small> : null}
-                        {store.editingUserData?.accessType === EnumAccessType.Admin ||
-                        store.editingUserData?.accessType === EnumAccessType.Moderator ? (
+                        {store.editingUserData?.accessType === EnumAccessType.Admin ? (
                           <div className="d-flex justify-content-center">
                             <div className="w-100">
                               <div className="w-100 select">

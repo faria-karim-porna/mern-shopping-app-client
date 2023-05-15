@@ -19,7 +19,7 @@ const AddUserModalComponent = () => {
     shallowEqual
   );
 
-  const [currAccessType, setCurrAccessType] = useState(
+  const [currAccessType, setCurrAccessType] = useState(() =>
     store.personalData?.accessType === EnumAccessType.Moderator ? EnumAccessType.Moderator : EnumAccessType.Admin
   );
 
@@ -45,7 +45,7 @@ const AddUserModalComponent = () => {
         email: validationData.email,
         createdAt: dateAndTime,
         createdBy: store.personalData?.name,
-        accessType: currAccessType,
+        accessType: store.personalData?.accessType === EnumAccessType.Moderator ? EnumAccessType.Moderator : currAccessType,
         creatorId: store.personalData?.id,
       };
       fetch("http://localhost:5000/api/addUsers", {
@@ -86,6 +86,7 @@ const AddUserModalComponent = () => {
     setSuccessMessage("");
     dispatch(UIAction.setModalView(EnumModal.None));
   };
+
   return (
     <>
       <Modal show={store.isModalOpen} className="p-1">
@@ -124,37 +125,46 @@ const AddUserModalComponent = () => {
                         {validationErrors.email ? <small className="text-danger">{validationErrors.email}</small> : null}
                         <div className="d-flex justify-content-center">
                           <div className="w-100">
-                            <div className="w-100 select">
-                              <div
-                                className="glass-effect py-2 px-3 my-2 w-100 d-flex justify-content-between"
-                                onClick={() => {
-                                  setIsSelectActive(true);
-                                }}
-                              >
-                                <div>{currAccessType}</div>
-                                <i className="fa fa-caret-down down-caret-icon" aria-hidden="true"></i>
-                              </div>
-                              <div className={`glass-effect ${isSelectActive ? "d-block" : "d-none"}`}>
+                            {store.personalData?.accessType !== EnumAccessType.Moderator ? (
+                              <div className="w-100 select">
                                 <div
-                                  className="option py-2 px-3 w-100"
+                                  className="glass-effect py-2 px-3 my-2 w-100 d-flex justify-content-between"
                                   onClick={() => {
-                                    setIsSelectActive(false);
-                                    setCurrAccessType(EnumAccessType.Admin);
+                                    setIsSelectActive(true);
                                   }}
                                 >
-                                  Admin
+                                  <div>{currAccessType}</div>
+                                  <i className="fa fa-caret-down down-caret-icon" aria-hidden="true"></i>
                                 </div>
-                                <div
-                                  className="option py-2 px-3 w-100"
-                                  onClick={() => {
-                                    setIsSelectActive(false);
-                                    setCurrAccessType(EnumAccessType.Moderator);
-                                  }}
-                                >
-                                  Moderator
+                                <div className={`glass-effect ${isSelectActive ? "d-block" : "d-none"}`}>
+                                  <div
+                                    className="option py-2 px-3 w-100"
+                                    onClick={() => {
+                                      setIsSelectActive(false);
+                                      setCurrAccessType(EnumAccessType.Admin);
+                                    }}
+                                  >
+                                    Admin
+                                  </div>
+                                  <div
+                                    className="option py-2 px-3 w-100"
+                                    onClick={() => {
+                                      setIsSelectActive(false);
+                                      setCurrAccessType(EnumAccessType.Moderator);
+                                    }}
+                                  >
+                                    Moderator
+                                  </div>
                                 </div>
                               </div>
-                            </div>
+                            ) : (
+                              <div className="w-100 select">
+                                <div className="glass-effect py-2 px-3 my-2 w-100 d-flex justify-content-between">
+                                  <div>Moderator</div>
+                                  <i className="fa fa-caret-down down-caret-icon" aria-hidden="true"></i>
+                                </div>
+                              </div>
+                            )}
                           </div>
                         </div>
                         <div className="mb-4 mt-5">
