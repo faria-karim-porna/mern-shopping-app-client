@@ -209,7 +209,7 @@ const ItemsViewComponent = () => {
                       <td>
                         <div>
                           <span className="fw-bold"># </span>
-                          <span>{data.id}</span> <span>{data.name}</span>
+                          <span>{data.id} </span> <span>{data.name}</span>
                         </div>
                         <div>
                           <span className="fw-bold">Qty: </span>
