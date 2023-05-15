@@ -46,8 +46,14 @@ const SidebarComponent = () => {
         </div>
       ) : (
         <div className="sidebar d-block">
+          <div className="navbar-web-name fw-bold d-flex justify-content-between px-3 py-3">
+            <div>Shopping App</div>
+            <div>
+              <i className="fa fa-times cur-point" onClick={() => {}}></i>
+            </div>
+          </div>
           <div
-            className={`sidebar-option d-flex flex-column justify-content-center align-items-center ${
+            className={`sidebar-option d-flex align-items-center px-3 ${
               store.view === EnumView.ItemView ? "active" : ""
             }`}
             onClick={() => dispatch(UIAction.setView(EnumView.ItemView))}
@@ -57,7 +63,7 @@ const SidebarComponent = () => {
           </div>
           {store.personalData?.accessType !== EnumAccessType.User ? (
             <div
-              className={`sidebar-option d-flex flex-column justify-content-center align-items-center ${
+              className={`sidebar-option d-flex align-items-center px-3 ${
                 store.view === EnumView.UserView ? "active" : ""
               }`}
               onClick={() => dispatch(UIAction.setView(EnumView.UserView))}
