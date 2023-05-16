@@ -6,6 +6,10 @@
 
 #### Server Side Github Link : https://github.com/faria-karim-porna/mern-shopping-app-server
 
+## Video Preview Of The Project
+
+![](https://github.com/faria-karim-porna/mern-shopping-app-client/blob/main/Demo.gif)
+
 ## Overview
 
 - A full stack web based app admin panel for a shopping site
