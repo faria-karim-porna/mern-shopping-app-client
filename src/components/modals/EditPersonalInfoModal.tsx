@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../core/redux/reduxStore";
 import { shallowEqual } from "react-redux";
 import { Modal } from "react-bootstrap";

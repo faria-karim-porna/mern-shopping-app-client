@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Login } from "./components/pages/Login";
 import { SignUp } from "./components/pages/Signup";
@@ -24,9 +23,10 @@ export default function App() {
               </PrivateRoute>
             }
           />
-          <Route path="/login" element={<Login />} />
-          <Route path="/resetpassword" element={<ResetPassword />} />
-          <Route path="/signup" element={<SignUp />} />
+          <Route path="login" element={<Login />} />
+          <Route path="resetpassword" element={<ResetPassword />} />
+          <Route path="signup" element={<SignUp />} />
+          <Route path="*" element={<h1>Page Not Found</h1>}/>
         </Routes>
       </Router>
       <AddUserModal />
