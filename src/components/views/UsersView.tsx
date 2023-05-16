@@ -25,11 +25,11 @@ const UsersViewComponent = () => {
       const filteredData = usersWithoutSelf?.filter(
         (user) =>
           user.id?.toString().includes(searchKey) ||
-          user.name?.toLowerCase().includes(searchKey) ||
-          user.email?.toLowerCase().includes(searchKey) ||
-          user.accessType?.toLowerCase().includes(searchKey) ||
-          user.createdAt?.toLowerCase().includes(searchKey) ||
-          user.createdBy?.toLowerCase().includes(searchKey)
+          user.name?.toLowerCase().includes(searchKey.toLowerCase()) ||
+          user.email?.toLowerCase().includes(searchKey.toLowerCase()) ||
+          user.accessType?.toLowerCase().includes(searchKey.toLowerCase()) ||
+          user.createdAt?.toLowerCase().includes(searchKey.toLowerCase()) ||
+          user.createdBy?.toLowerCase().includes(searchKey.toLowerCase())
       );
       setAllData(filteredData);
     } else {

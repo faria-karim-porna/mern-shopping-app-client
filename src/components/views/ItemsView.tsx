@@ -25,11 +25,11 @@ const ItemsViewComponent = () => {
       const filteredData = allItemData?.filter(
         (item) =>
           item.id?.toString().includes(searchKey) ||
-          item.name?.toLowerCase().includes(searchKey) ||
-          item.quantity?.toString().includes(searchKey) ||
-          item.unitPrice?.toString().includes(searchKey) ||
-          item.createdAt?.toLowerCase().includes(searchKey) ||
-          item.createdBy?.toLowerCase().includes(searchKey)
+          item.name?.toLowerCase().includes(searchKey.toLowerCase()) ||
+          item.quantity?.toString().includes(searchKey.toLowerCase()) ||
+          item.unitPrice?.toString().includes(searchKey.toLowerCase()) ||
+          item.createdAt?.toLowerCase().includes(searchKey.toLowerCase()) ||
+          item.createdBy?.toLowerCase().includes(searchKey.toLowerCase())
       );
       setAllData(filteredData);
     } else {
