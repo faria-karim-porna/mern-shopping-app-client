@@ -13,8 +13,9 @@ const ItemsViewComponent = () => {
   const [allData, setAllData] = useState<ItemType[] | undefined>();
   const store = useAppSelector(
     (state) => ({
-      itemsData: state.UI.itemsData,
+      itemsData: state.ItemsAPI.items,
       personalData: state.UI.personalData,
+      isLoading: state.ItemsAPI.loading,
     }),
     shallowEqual
   );
@@ -39,11 +40,17 @@ const ItemsViewComponent = () => {
 
   const deleteData = (id?: number) => {
     const deletedItem = { id: id };
-    fetch("http://localhost:5000/api/deleteItems", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json", Authorization: `Bearer ${localStorage.getItem("token")}` },
-      body: JSON.stringify(deletedItem),
-    })
+    fetch(
+      "https://mern-shopping-app-server-p7bccw89z-faria-karim-porna.vercel.app/api/deleteItems",
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(deletedItem),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.items) {
@@ -52,11 +59,17 @@ const ItemsViewComponent = () => {
       });
   };
   const isDesktop = useMemo(
-    () => Utility.BrowserWindowUtil.DeviceRenderCategory.Desktop.some(Utility.BrowserWindowUtil.IsCurrentRenderDevice),
+    () =>
+      Utility.BrowserWindowUtil.DeviceRenderCategory.Desktop.some(
+        Utility.BrowserWindowUtil.IsCurrentRenderDevice
+      ),
     []
   );
   const isTablet = useMemo(
-    () => Utility.BrowserWindowUtil.DeviceRenderCategory.Tablet.some(Utility.BrowserWindowUtil.IsCurrentRenderDevice),
+    () =>
+      Utility.BrowserWindowUtil.DeviceRenderCategory.Tablet.some(
+        Utility.BrowserWindowUtil.IsCurrentRenderDevice
+      ),
     []
   );
   return (
@@ -67,16 +80,21 @@ const ItemsViewComponent = () => {
           placeholder="Searh..."
           className="glass-effect py-2 px-3 my-2 w-50"
           name="Search"
-          onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchKey(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setSearchKey(e.target.value)
+          }
         />
         {store.personalData?.accessType !== EnumAccessType.User ? (
           <button
-            onClick={() => dispatch(UIAction.setModalView(EnumModal.AddItemModal))}
+            onClick={() =>
+              dispatch(UIAction.setModalView(EnumModal.AddItemModal))
+            }
             className="form-button px-4 d-flex align-items-center"
           >
             {isDesktop || isTablet ? (
               <>
-                <i className="fa fa-plus plus-icon mr-1" aria-hidden="true"></i> Add Item
+                <i className="fa fa-plus plus-icon mr-1" aria-hidden="true"></i>{" "}
+                Add Item
               </>
             ) : (
               <i className="fa fa-plus plus-icon mr-1" aria-hidden="true"></i>
@@ -86,7 +104,11 @@ const ItemsViewComponent = () => {
       </div>
       <div className="glass-effect mt-4">
         {(allData?.length ?? 0) > 0 ? (
-          <div className={`table-box table-responsive ${isDesktop ? "font-20" : isTablet ? "font-16" : "font-12"} table-scroll`}>
+          <div
+            className={`table-box table-responsive ${
+              isDesktop ? "font-20" : isTablet ? "font-16" : "font-12"
+            } table-scroll`}
+          >
             <table className="table">
               <thead>
                 {isDesktop ? (
@@ -98,7 +120,8 @@ const ItemsViewComponent = () => {
                     <th scope="col">Created At</th>
                     <th scope="col">Created By</th>
                     {store.personalData?.accessType !== EnumAccessType.User &&
-                    store.personalData?.accessType !== EnumAccessType.Moderator ? (
+                    store.personalData?.accessType !==
+                      EnumAccessType.Moderator ? (
                       <th scope="col">Action</th>
                     ) : null}
                   </tr>
@@ -108,7 +131,8 @@ const ItemsViewComponent = () => {
                     <th scope="col">Product Info</th>
                     <th scope="col">Creation Info</th>
                     {store.personalData?.accessType !== EnumAccessType.User &&
-                    store.personalData?.accessType !== EnumAccessType.Moderator ? (
+                    store.personalData?.accessType !==
+                      EnumAccessType.Moderator ? (
                       <th scope="col">Action</th>
                     ) : null}
                   </tr>
@@ -116,7 +140,8 @@ const ItemsViewComponent = () => {
                   <tr>
                     <th scope="col">Product Info</th>
                     {store.personalData?.accessType !== EnumAccessType.User &&
-                    store.personalData?.accessType !== EnumAccessType.Moderator ? (
+                    store.personalData?.accessType !==
+                      EnumAccessType.Moderator ? (
                       <th scope="col">Action</th>
                     ) : null}
                   </tr>
@@ -133,14 +158,17 @@ const ItemsViewComponent = () => {
                       <td>{data.createdAt}</td>
                       <td>{data.createdBy}</td>
                       {store.personalData?.accessType !== EnumAccessType.User &&
-                      store.personalData?.accessType !== EnumAccessType.Moderator ? (
+                      store.personalData?.accessType !==
+                        EnumAccessType.Moderator ? (
                         <td>
                           <div className="d-flex">
                             <div
                               className="edit-icon d-flex justify-content-center align-items-center mx-2"
                               onClick={() => {
                                 dispatch(UIAction.setEditingItemData(data));
-                                dispatch(UIAction.setModalView(EnumModal.EditItemModal));
+                                dispatch(
+                                  UIAction.setModalView(EnumModal.EditItemModal)
+                                );
                               }}
                             >
                               <i className="fa fa-pencil"></i>
@@ -187,14 +215,17 @@ const ItemsViewComponent = () => {
                         </div>
                       </td>
                       {store.personalData?.accessType !== EnumAccessType.User &&
-                      store.personalData?.accessType !== EnumAccessType.Moderator ? (
+                      store.personalData?.accessType !==
+                        EnumAccessType.Moderator ? (
                         <td>
                           <div className="d-flex">
                             <div
                               className="edit-icon d-flex justify-content-center align-items-center mx-2"
                               onClick={() => {
                                 dispatch(UIAction.setEditingItemData(data));
-                                dispatch(UIAction.setModalView(EnumModal.EditItemModal));
+                                dispatch(
+                                  UIAction.setModalView(EnumModal.EditItemModal)
+                                );
                               }}
                             >
                               <i className="fa fa-pencil"></i>
@@ -238,14 +269,17 @@ const ItemsViewComponent = () => {
                         </div>
                       </td>
                       {store.personalData?.accessType !== EnumAccessType.User &&
-                      store.personalData?.accessType !== EnumAccessType.Moderator ? (
+                      store.personalData?.accessType !==
+                        EnumAccessType.Moderator ? (
                         <td>
                           <div className="d-flex">
                             <div
                               className="edit-icon d-flex justify-content-center align-items-center mx-2"
                               onClick={() => {
                                 dispatch(UIAction.setEditingItemData(data));
-                                dispatch(UIAction.setModalView(EnumModal.EditItemModal));
+                                dispatch(
+                                  UIAction.setModalView(EnumModal.EditItemModal)
+                                );
                               }}
                             >
                               <i className="fa fa-pencil"></i>
@@ -265,6 +299,8 @@ const ItemsViewComponent = () => {
               )}
             </table>
           </div>
+        ) : store.isLoading ? (
+          <div className="p-3 text-danger">Loading...</div>
         ) : (
           <div className="p-3 text-danger">No product is available yet</div>
         )}

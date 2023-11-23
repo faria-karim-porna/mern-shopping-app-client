@@ -48,7 +48,7 @@ const AddUserModalComponent = () => {
         accessType: store.personalData?.accessType === EnumAccessType.Moderator ? EnumAccessType.Moderator : currAccessType,
         creatorId: store.personalData?.id,
       };
-      fetch("http://localhost:5000/api/addUsers", {
+      fetch("https://mern-shopping-app-server-p7bccw89z-faria-karim-porna.vercel.app/api/addUsers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

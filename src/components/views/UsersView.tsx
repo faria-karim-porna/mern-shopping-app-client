@@ -39,7 +39,7 @@ const UsersViewComponent = () => {
 
   const deleteData = (id?: number) => {
     const deletedUser = { id: id };
-    fetch("http://localhost:5000/api/deleteUsers", {
+    fetch("https://mern-shopping-app-server-p7bccw89z-faria-karim-porna.vercel.app/api/deleteUsers", {
       method: "DELETE",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${localStorage.getItem("token")}` },
       body: JSON.stringify(deletedUser),

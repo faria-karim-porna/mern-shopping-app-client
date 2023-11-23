@@ -50,7 +50,7 @@ const SignUpComponent = () => {
         password: validationData.password,
         createdAt: dateAndTime,
       };
-      fetch("http://localhost:5000/api/createAccount", {
+      fetch("https://mern-shopping-app-server-p7bccw89z-faria-karim-porna.vercel.app/api/createAccount", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

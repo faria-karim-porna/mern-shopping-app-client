@@ -59,7 +59,7 @@ const EditPersonalInfoModalComponent = () => {
         email: validationData.email,
         accessType: currAccessType,
       };
-      fetch("http://localhost:5000/api/updateUsers", {
+      fetch("https://mern-shopping-app-server-p7bccw89z-faria-karim-porna.vercel.app/api/updateUsers", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

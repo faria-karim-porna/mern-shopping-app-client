@@ -36,7 +36,7 @@ const ResetPasswordComponent = () => {
         password: validationData.password,
       };
 
-      fetch("http://localhost:5000/api/resetpassword", {
+      fetch("https://mern-shopping-app-server-p7bccw89z-faria-karim-porna.vercel.app/api/resetpassword", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

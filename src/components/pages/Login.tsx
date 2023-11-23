@@ -21,7 +21,7 @@ const LoginComponent = () => {
         password: validationData.password,
       };
 
-      fetch("http://localhost:5000/api/login", {
+      fetch("https://mern-shopping-app-server-p7bccw89z-faria-karim-porna.vercel.app/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

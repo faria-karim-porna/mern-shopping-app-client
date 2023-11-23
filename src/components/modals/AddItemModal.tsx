@@ -59,7 +59,7 @@ const AddItemModalComponent = () => {
         createdBy: store.personalData?.name,
         creatorId: store.personalData?.id,
       };
-      fetch("http://localhost:5000/api/addItems", {
+      fetch("https://mern-shopping-app-server-p7bccw89z-faria-karim-porna.vercel.app/api/addItems", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

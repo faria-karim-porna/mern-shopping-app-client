@@ -17,7 +17,7 @@ const NavbarComponent = () => {
   );
   const navigate = useNavigate();
   const logout = () => {
-    fetch("http://localhost:5000/api/logout", {
+    fetch("https://mern-shopping-app-server-p7bccw89z-faria-karim-porna.vercel.app/api/logout", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,

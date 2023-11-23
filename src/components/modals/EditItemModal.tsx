@@ -54,7 +54,7 @@ const EditItemModalComponent = () => {
         unitPrice: parseFloat(itemData.unitPrice?.toString() ?? ""),
         quantity: parseInt(itemData.quantity?.toString() ?? ""),
       };
-      fetch("http://localhost:5000/api/updateItems", {
+      fetch("https://mern-shopping-app-server-p7bccw89z-faria-karim-porna.vercel.app/api/updateItems", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
