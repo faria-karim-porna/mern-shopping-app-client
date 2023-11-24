@@ -1,9 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ItemType } from "../../types/itemsType";
 
-//Get all user action
 export const getAllItem = createAsyncThunk(
-  "getUsers",
+  "getAllItem",
   async (args, { rejectWithValue }) => {
     try {
       const response = await fetch(
@@ -57,25 +56,31 @@ export const getAllItem = createAsyncThunk(
 //   }
 // );
 
-// //delete single user
-// export const deleteUser = createAsyncThunk(
-//   "deleteUser",
-//   async (id, { rejectWithValue }) => {
-//     try {
-//       const response = await fetch(
-//         `https://629f5d82461f8173e4e7db69.mockapi.io/Crud/${id}`,
-//         {
-//           method: "DELETE",
-//         }
-//       );
-//       const result = await response.json();
-//       return result;
-//     } catch (err) {
-//       console.log(err);
-//       return rejectWithValue(err.response.data);
-//     }
-//   }
-// );
+//delete single user
+export const deleteItem = createAsyncThunk(
+  "deleteItem",
+  async (id: number, { rejectWithValue }) => {
+    try {
+      const deletedItem = { id: id };
+      const response = await fetch(
+        "https://mern-shopping-app-server-p7bccw89z-faria-karim-porna.vercel.app/api/deleteItems",
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify(deletedItem),
+        }
+      );
+      const result = await response.json();
+      return result.items;
+    } catch (err) {
+      console.log(err);
+      return rejectWithValue("Opps found an error");
+    }
+  }
+);
 
 // //update user
 // export const updateUser = createAsyncThunk(
@@ -135,6 +140,22 @@ export const itemSlice = createSlice({
       .addCase(getAllItem.rejected, (state, action) => {
         state.loading = false;
         state.error = "Error";
+      })
+      .addCase(deleteItem.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteItem.fulfilled, (state, action) => {
+        state.loading = false;
+        state.items = action.payload;
+
+        // const { id } = action.payload;
+        // if (id) {
+        //   state.items = state.items?.filter((item) => item.id !== id);
+        // }
+      })
+      .addCase(deleteItem.rejected, (state, action) => {
+        state.loading = false;
+        state.error = "Error";
       });
   },
   //   extraReducers: {
@@ -153,20 +174,6 @@ export const itemSlice = createSlice({
   //     // [createUser.fulfilled]: (state, action) => {
   //     //   state.loading = false;
   //     //   state.users.push(action.payload);
-  //     // },
-  //     // [deleteUser.pending]: (state) => {
-  //     //   state.loading = true;
-  //     // },
-  //     // [deleteUser.fulfilled]: (state, action) => {
-  //     //   state.loading = false;
-  //     //   const { id } = action.payload;
-  //     //   if (id) {
-  //     //     state.users = state.users.filter((post) => post.id !== id);
-  //     //   }
-  //     // },
-  //     // [deleteUser.rejected]: (state, action) => {
-  //     //   state.loading = false;
-  //     //   state.error = action.payload.message;
   //     // },
   //     // [getSingleUser.pending]: (state) => {
   //     //   state.loading = true;

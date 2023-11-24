@@ -6,6 +6,7 @@ import { shallowEqual } from "react-redux";
 import { ItemType } from "../core/types/itemsType";
 import { EnumAccessType } from "../core/enums/EnumAccessType";
 import { Utility } from "../utils/utility";
+import { deleteItem } from "../core/redux/slices/ItemSlice";
 
 const ItemsViewComponent = () => {
   const dispatch = useAppDispatch();
@@ -39,24 +40,7 @@ const ItemsViewComponent = () => {
   }, [searchKey, store.itemsData]);
 
   const deleteData = (id?: number) => {
-    const deletedItem = { id: id };
-    fetch(
-      "https://mern-shopping-app-server-p7bccw89z-faria-karim-porna.vercel.app/api/deleteItems",
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify(deletedItem),
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.items) {
-          dispatch(UIAction.setItemData(data.items));
-        }
-      });
+    dispatch(deleteItem(id ?? 0));
   };
   const isDesktop = useMemo(
     () =>
