@@ -5,6 +5,7 @@ import { Modal } from "react-bootstrap";
 import { EnumModal } from "../core/enums/EnumModal";
 import { UIAction } from "../core/redux/slices/UISlice";
 import { useItem } from "../hooks/useItem";
+import { createItem } from "../core/redux/slices/ItemSlice";
 
 const AddItemModalComponent = () => {
   const dispatch = useAppDispatch();
@@ -47,8 +48,14 @@ const AddItemModalComponent = () => {
   const addItem = () => {
     checkEmptyFieldError();
     if (isValidate()) {
-      const date = `${new Date().getDate()}-${new Date().getMonth() + 1}-${new Date().getFullYear()}`;
-      const time = new Date().toLocaleString("en-US", { hour: "numeric", minute: "numeric", hour12: true });
+      const date = `${new Date().getDate()}-${
+        new Date().getMonth() + 1
+      }-${new Date().getFullYear()}`;
+      const time = new Date().toLocaleString("en-US", {
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      });
       const dateAndTime = `${date} (${time})`;
 
       const newItem = {
@@ -59,21 +66,9 @@ const AddItemModalComponent = () => {
         createdBy: store.personalData?.name,
         creatorId: store.personalData?.id,
       };
-      fetch("https://mern-shopping-app-server-p7bccw89z-faria-karim-porna.vercel.app/api/addItems", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify(newItem),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.items) {
-            setSuccessMessage(data.message);
-            dispatch(UIAction.setItemData(data.items));
-          }
-        });
+      dispatch(createItem(newItem)).then((res) => {
+        setSuccessMessage(res.payload.message);
+      });
     }
   };
 
@@ -109,7 +104,10 @@ const AddItemModalComponent = () => {
                         <div>Add New Item</div>
                         <div className="underline"></div>
                       </div>
-                      <i className="fa fa-times font-20 cur-point" onClick={() => closeModal()}></i>
+                      <i
+                        className="fa fa-times font-20 cur-point"
+                        onClick={() => closeModal()}
+                      ></i>
                     </div>
                     <div className="d-flex justify-content-center">
                       <div className="w-100">
@@ -126,7 +124,11 @@ const AddItemModalComponent = () => {
                             checkNameValidation(e.target.value, true);
                           }}
                         />
-                        {itemInfoErrors.name ? <small className="text-danger">{itemInfoErrors.name}</small> : null}
+                        {itemInfoErrors.name ? (
+                          <small className="text-danger">
+                            {itemInfoErrors.name}
+                          </small>
+                        ) : null}
                         <input
                           type="text"
                           placeholder="Quantity"
@@ -140,7 +142,11 @@ const AddItemModalComponent = () => {
                             checkQuantityValidation(e.target.value, true);
                           }}
                         />
-                        {itemInfoErrors.quantity ? <small className="text-danger">{itemInfoErrors.quantity}</small> : null}
+                        {itemInfoErrors.quantity ? (
+                          <small className="text-danger">
+                            {itemInfoErrors.quantity}
+                          </small>
+                        ) : null}
                         <input
                           type="text"
                           placeholder="Unit Price"
@@ -154,12 +160,23 @@ const AddItemModalComponent = () => {
                             checkUnitPriceValidation(e.target.value, true);
                           }}
                         />
-                        {itemInfoErrors.unitPrice ? <small className="text-danger">{itemInfoErrors.unitPrice}</small> : null}
+                        {itemInfoErrors.unitPrice ? (
+                          <small className="text-danger">
+                            {itemInfoErrors.unitPrice}
+                          </small>
+                        ) : null}
                         <div className="mb-4 mt-5">
-                          <button onClick={() => addItem()} className="form-button w-100">
+                          <button
+                            onClick={() => addItem()}
+                            className="form-button w-100"
+                          >
                             Add Item
                           </button>
-                          {successMessage ? <small className="text-success mt-1">{successMessage}</small> : null}
+                          {successMessage ? (
+                            <small className="text-success mt-1">
+                              {successMessage}
+                            </small>
+                          ) : null}
                         </div>
                       </div>
                     </div>

@@ -37,24 +37,29 @@ export const getAllItem = createAsyncThunk(
 //     }
 //   }
 // );
-// //create action
-// export const createUser = createAsyncThunk(
-//   "createUser",
-//   async (data, { rejectWithValue }) => {
-//     const response = await fetch(
-//       "https://629f5d82461f8173e4e7db69.mockapi.io/Crud",
-//       {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify(data),
-//       }
-//     );
-//     const result = await response.json();
-//     return result;
-//   }
-// );
+
+export const createItem = createAsyncThunk(
+  "createItem",
+  async (newItem: ItemType, { rejectWithValue }) => {
+    try {
+      const response = await fetch(
+        "https://mern-shopping-app-server-p7bccw89z-faria-karim-porna.vercel.app/api/addItems",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify(newItem),
+        }
+      );
+      const result = await response.json();
+      return result;
+    } catch (err) {
+      return rejectWithValue("Opps found an error");
+    }
+  }
+);
 
 export const deleteItem = createAsyncThunk(
   "deleteItem",
@@ -80,7 +85,6 @@ export const deleteItem = createAsyncThunk(
   }
 );
 
-//update user
 export const updateItem = createAsyncThunk(
   "updateItem",
   async (editedItem: ItemType, { rejectWithValue }) => {
@@ -168,25 +172,22 @@ export const itemSlice = createSlice({
       .addCase(updateItem.rejected, (state, action) => {
         state.loading = false;
         state.error = "Error";
+      })
+      .addCase(createItem.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(createItem.fulfilled, (state, action) => {
+        state.loading = false;
+        state.items = action.payload.items;
+
+        // state.items?.push(action.payload.items);
+      })
+      .addCase(createItem.rejected, (state, action) => {
+        state.loading = false;
+        state.error = "Error";
       });
   },
   //   extraReducers: {
-  //     [getAllItem.]: (state) => {
-  //       state.loading = true;
-  //     },
-  //     [getAllItem.fulfilled]: (state, action) => {
-  //       state.loading = false;
-  //       state.singleUser = [];
-  //       state.users = action.payload;
-  //     },
-  //     [getAllItem.rejected]: (state, action) => {
-  //       state.loading = false;
-  //       state.error = action.payload;
-  //     },
-  //     // [createUser.fulfilled]: (state, action) => {
-  //     //   state.loading = false;
-  //     //   state.users.push(action.payload);
-  //     // },
   //     // [getSingleUser.pending]: (state) => {
   //     //   state.loading = true;
   //     // },
