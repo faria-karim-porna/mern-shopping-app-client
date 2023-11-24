@@ -189,7 +189,8 @@ export const itemSlice = createSlice({
       .addCase(createItem.rejected, (state, action) => {
         state.loading = false;
         state.error = "Error";
-      }).addCase(getSingleItem.pending, (state) => {
+      })
+      .addCase(getSingleItem.pending, (state) => {
         state.loading = true;
       })
       .addCase(getSingleItem.fulfilled, (state, action) => {
