@@ -21,26 +21,6 @@ export const getAllItem = createAsyncThunk(
   }
 );
 
-export const getSingleItem = createAsyncThunk(
-  "getSingleItem",
-  async (id, { rejectWithValue }) => {
-    try {
-      const response = await fetch(
-        `https://mern-shopping-app-server-p7bccw89z-faria-karim-porna.vercel.app/api/singItem/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      const result = await response.json();
-      return result;
-    } catch (err) {
-      return rejectWithValue(err);
-    }
-  }
-);
-
 export const createItem = createAsyncThunk(
   "createItem",
   async (newItem: ItemType, { rejectWithValue }) => {
@@ -153,11 +133,6 @@ export const itemSlice = createSlice({
       .addCase(deleteItem.fulfilled, (state, action) => {
         state.loading = false;
         state.items = action.payload;
-
-        // const { id } = action.payload;
-        // if (id) {
-        //   state.items = state.items?.filter((item) => item.id !== id);
-        // }
       })
       .addCase(deleteItem.rejected, (state, action) => {
         state.loading = false;
@@ -169,9 +144,6 @@ export const itemSlice = createSlice({
       .addCase(updateItem.fulfilled, (state, action) => {
         state.loading = false;
         state.items = action.payload.items;
-        //   state.items = state.items?.map((item) =>
-        //   item.id === action.payload.items.id ? action.payload.items : item
-        // );
       })
       .addCase(updateItem.rejected, (state, action) => {
         state.loading = false;
@@ -183,21 +155,8 @@ export const itemSlice = createSlice({
       .addCase(createItem.fulfilled, (state, action) => {
         state.loading = false;
         state.items = action.payload.items;
-
-        // state.items?.push(action.payload.items);
       })
       .addCase(createItem.rejected, (state, action) => {
-        state.loading = false;
-        state.error = "Error";
-      })
-      .addCase(getSingleItem.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(getSingleItem.fulfilled, (state, action) => {
-        state.loading = false;
-        state.singleItem = action.payload;
-      })
-      .addCase(getSingleItem.rejected, (state, action) => {
         state.loading = false;
         state.error = "Error";
       });
