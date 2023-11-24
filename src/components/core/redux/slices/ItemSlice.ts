@@ -21,22 +21,25 @@ export const getAllItem = createAsyncThunk(
   }
 );
 
-// //get single user
-// export const getSingleUser = createAsyncThunk(
-//   "getSingleUser",
-//   async (id, { rejectWithValue }) => {
-//     const response = await fetch(
-//       `https://629f5d82461f8173e4e7db69.mockapi.io/Crud/${id}`
-//     );
-
-//     try {
-//       const result = await response.json();
-//       return result;
-//     } catch (err) {
-//       return rejectWithValue(err.message);
-//     }
-//   }
-// );
+export const getSingleItem = createAsyncThunk(
+  "getSingleItem",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await fetch(
+        `https://mern-shopping-app-server-p7bccw89z-faria-karim-porna.vercel.app/api/singItem/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      const result = await response.json();
+      return result;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
 
 export const createItem = createAsyncThunk(
   "createItem",
@@ -113,6 +116,7 @@ type ItemState = {
   loading?: boolean;
   error?: string;
   searchData?: [];
+  singleItem?: ItemType;
 };
 
 const initialState: ItemState = {
@@ -185,21 +189,18 @@ export const itemSlice = createSlice({
       .addCase(createItem.rejected, (state, action) => {
         state.loading = false;
         state.error = "Error";
+      }).addCase(getSingleItem.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getSingleItem.fulfilled, (state, action) => {
+        state.loading = false;
+        state.singleItem = action.payload;
+      })
+      .addCase(getSingleItem.rejected, (state, action) => {
+        state.loading = false;
+        state.error = "Error";
       });
   },
-  //   extraReducers: {
-  //     // [getSingleUser.pending]: (state) => {
-  //     //   state.loading = true;
-  //     // },
-  //     // [getSingleUser.fulfilled]: (state, action) => {
-  //     //   state.loading = false;
-  //     //   state.singleUser = [action.payload];
-  //     // },
-  //     // [getSingleUser.rejected]: (state, action) => {
-  //     //   state.loading = false;
-  //     //   state.error = action.payload.message;
-  //     // },
-  //   },
 });
 
 export const itemsAPIReducer = itemSlice.reducer;
