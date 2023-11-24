@@ -56,7 +56,6 @@ export const getAllItem = createAsyncThunk(
 //   }
 // );
 
-//delete single user
 export const deleteItem = createAsyncThunk(
   "deleteItem",
   async (id: number, { rejectWithValue }) => {
@@ -76,35 +75,34 @@ export const deleteItem = createAsyncThunk(
       const result = await response.json();
       return result.items;
     } catch (err) {
-      console.log(err);
       return rejectWithValue("Opps found an error");
     }
   }
 );
 
-// //update user
-// export const updateUser = createAsyncThunk(
-//   "updateUser",
-//   async ({ id, name, email, age, gender }, { rejectWithValue }) => {
-
-//     try {
-//       const response = await fetch(
-//         `https://629f5d82461f8173e4e7db69.mockapi.io/Crud/${id}`,
-//         {
-//           method: "PUT",
-//           headers: {
-//             "Content-Type": "application/json",
-//           },
-//           body: JSON.stringify({ name, email, age, gender }),
-//         }
-//       );
-//       const result = await response.json();
-//       return result;
-//     } catch (err) {
-//       return rejectWithValue(err);
-//     }
-//   }
-// );
+//update user
+export const updateItem = createAsyncThunk(
+  "updateItem",
+  async (editedItem: ItemType, { rejectWithValue }) => {
+    try {
+      const response = await fetch(
+        "https://mern-shopping-app-server-p7bccw89z-faria-karim-porna.vercel.app/api/updateItems",
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify(editedItem),
+        }
+      );
+      const result = await response.json();
+      return result;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
 
 type ItemState = {
   items?: ItemType[];
@@ -156,6 +154,20 @@ export const itemSlice = createSlice({
       .addCase(deleteItem.rejected, (state, action) => {
         state.loading = false;
         state.error = "Error";
+      })
+      .addCase(updateItem.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateItem.fulfilled, (state, action) => {
+        state.loading = false;
+        state.items = action.payload.items;
+        //   state.items = state.items?.map((item) =>
+        //   item.id === action.payload.items.id ? action.payload.items : item
+        // );
+      })
+      .addCase(updateItem.rejected, (state, action) => {
+        state.loading = false;
+        state.error = "Error";
       });
   },
   //   extraReducers: {
@@ -183,20 +195,6 @@ export const itemSlice = createSlice({
   //     //   state.singleUser = [action.payload];
   //     // },
   //     // [getSingleUser.rejected]: (state, action) => {
-  //     //   state.loading = false;
-  //     //   state.error = action.payload.message;
-  //     // },
-  //     // [updateUser.pending]: (state) => {
-  //     //   state.loading = true;
-  //     // },
-  //     // [updateUser.fulfilled]: (state, action) => {
-  //     //   console.log("updated user fulfilled", action.payload);
-  //     //   state.loading = false;
-  //     //   state.users = state.users.map((ele) =>
-  //     //     ele.id === action.payload.id ? action.payload : ele
-  //     //   );
-  //     // },
-  //     // [updateUser.rejected]: (state, action) => {
   //     //   state.loading = false;
   //     //   state.error = action.payload.message;
   //     // },

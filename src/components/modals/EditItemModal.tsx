@@ -6,6 +6,7 @@ import { Modal } from "react-bootstrap";
 import { EnumModal } from "../core/enums/EnumModal";
 import { UIAction } from "../core/redux/slices/UISlice";
 import { useItem } from "../hooks/useItem";
+import { updateItem } from "../core/redux/slices/ItemSlice";
 
 const EditItemModalComponent = () => {
   const dispatch = useAppDispatch();
@@ -54,21 +55,9 @@ const EditItemModalComponent = () => {
         unitPrice: parseFloat(itemData.unitPrice?.toString() ?? ""),
         quantity: parseInt(itemData.quantity?.toString() ?? ""),
       };
-      fetch("https://mern-shopping-app-server-p7bccw89z-faria-karim-porna.vercel.app/api/updateItems", {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify(editedItem),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.items) {
-            setSuccessMessage(data.message);
-            dispatch(UIAction.setItemData(data.items));
-          }
-        });
+      dispatch(updateItem(editedItem)).then((res) => {
+        setSuccessMessage(res.payload.message);
+      });
     }
   };
 
@@ -100,7 +89,10 @@ const EditItemModalComponent = () => {
                         <div>Edit Item</div>
                         <div className="underline"></div>
                       </div>
-                      <i className="fa fa-times font-20 cur-point" onClick={() => closeModal()}></i>
+                      <i
+                        className="fa fa-times font-20 cur-point"
+                        onClick={() => closeModal()}
+                      ></i>
                     </div>
                     <div className="d-flex justify-content-center">
                       <div className="w-100">
@@ -117,7 +109,11 @@ const EditItemModalComponent = () => {
                             checkNameValidation(e.target.value, true);
                           }}
                         />
-                        {itemInfoErrors.name ? <small className="text-danger">{itemInfoErrors.name}</small> : null}
+                        {itemInfoErrors.name ? (
+                          <small className="text-danger">
+                            {itemInfoErrors.name}
+                          </small>
+                        ) : null}
                         <input
                           type="text"
                           placeholder="Quantity"
@@ -131,7 +127,11 @@ const EditItemModalComponent = () => {
                             checkQuantityValidation(e.target.value, true);
                           }}
                         />
-                        {itemInfoErrors.quantity ? <small className="text-danger">{itemInfoErrors.quantity}</small> : null}
+                        {itemInfoErrors.quantity ? (
+                          <small className="text-danger">
+                            {itemInfoErrors.quantity}
+                          </small>
+                        ) : null}
                         <input
                           type="text"
                           placeholder="Unit Price"
@@ -145,12 +145,23 @@ const EditItemModalComponent = () => {
                             checkUnitPriceValidation(e.target.value, true);
                           }}
                         />
-                        {itemInfoErrors.unitPrice ? <small className="text-danger">{itemInfoErrors.unitPrice}</small> : null}
+                        {itemInfoErrors.unitPrice ? (
+                          <small className="text-danger">
+                            {itemInfoErrors.unitPrice}
+                          </small>
+                        ) : null}
                         <div className="mb-4 mt-5">
-                          <button onClick={() => editItem()} className="form-button w-100">
+                          <button
+                            onClick={() => editItem()}
+                            className="form-button w-100"
+                          >
                             Edit Item
                           </button>
-                          {successMessage ? <small className="text-success mt-1">{successMessage}</small> : null}
+                          {successMessage ? (
+                            <small className="text-success mt-1">
+                              {successMessage}
+                            </small>
+                          ) : null}
                         </div>
                       </div>
                     </div>
